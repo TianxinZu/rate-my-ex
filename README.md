@@ -8,14 +8,21 @@ detail.jsp: page include all comments of a person
 chat.jsp: chat room
 
 index.jsp -> login.jsp
-index.jsp -> results.jsp
+index.jsp -> SearchDispatcher.java -> results.jsp
 index.jsp -> write.jsp
-login.jsp -> index.jsp
+login.jsp -> Login/Register/GoogleDispatcher.java -> index.jsp
 results.jsp -> index.jsp
-results.jsp -> detail.jsp
+results.jsp -> DetailDispatcher.java -> detail.jsp
 results.jsp -> write.jsp
 write.jsp -> index.jsp
-write.jsp -> detail.jsp
+write.jsp -> WriteDispatcher.java -> detail.jsp
 detail.jsp -> index.jsp
 detail.jsp -> chat.jsp
 chat.jsp -> index.jsp
+
+LoginDispatcher.java
+RegisterDispatcher.java
+GoogleDispatcher.java
+SearchDispatcher.java
+DetailDispatcher.java
+WriteDispatcher.java

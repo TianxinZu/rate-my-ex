@@ -1,0 +1,1 @@
+We use `demands.txt` to record the forms that backend need and the variables (cookies, ...) that the frontend need. 

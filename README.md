@@ -26,3 +26,4 @@ GoogleDispatcher.java
 SearchDispatcher.java
 DetailDispatcher.java
 WriteDispatcher.java
+ChatDispatcher.java

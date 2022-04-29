@@ -6,13 +6,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.Serial;
-import java.net.URLEncoder;
 
 /**
- * Servlet implementation class GoogleDispatcher
+ * Servlet implementation class LogoutDispatcher
  */
-@WebServlet("/GoogleDispatcher")
-public class GoogleDispatcher extends HttpServlet {
+@WebServlet("/LogoutDispatcher")
+public class LogoutDispatcher extends HttpServlet {
     @Serial
     private static final long serialVersionUID = 1L;
 
@@ -23,16 +22,15 @@ public class GoogleDispatcher extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html");
-
-        String username = request.getParameter("name");
-        Cookie cookie = new Cookie("username", username.replace(" ", "="));
-    	cookie.setMaxAge(3600);
-    	response.addCookie(cookie);
-    	//request.getRequestDispatcher("index.jsp").forward(request, response);
+    	response.setContentType("text/html");
+    	Cookie[] cookies = request.getCookies();
+    	for (Cookie cookie : cookies) 
+    	{
+    		cookie.setMaxAge(0);
+    		response.addCookie(cookie);
+    	}
     	response.sendRedirect("index.jsp");
     }
-
 
     /**
      * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse

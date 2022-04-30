@@ -6,17 +6,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="index.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bangers">
     <title>RATE MY EX</title>
 </head>
 <body>
+	<%
+		String username = "";
+		Cookie cookies[] = request.getCookies();
+	    if (cookies != null) {
+	    	for (Cookie cookie : cookies) {
+	    		if (cookie.getName().equals("username")) username = cookie.getValue().replace("=", " "); 
+	    	}
+	    }
+	%>
     <div id="navbar">
         <div id="navbar-left">
-            <a href="index.jsp" id="logo">RATE MY EX</a>
-            <!-- need to have user's information here-->
+            <a href="index.jsp" id="logo">Rate my ex</a>
+            <%
+            	if (!username.equals("")) {
+            		out.print("Hi "+ username + "!");
+            	}
+            %>
         </div>
         <div id="navbar-right">
             <a href="index.jsp" class="navbar-link">Home</a>
-            <!--login/register or logout-->
+            <%
+            	if (!username.equals("")) {
+            		%><a href="LogoutDispatcher" class="navbar-link">logout</a><%
+            	}
+            	else {
+            		%><a href="login.jsp" class="navbar-link">login/register</a><%
+            	}
+            %>
         </div>
     </div>
     <!-- insert a picture -->

@@ -8,7 +8,8 @@ body {
     align-items: center;
     padding: 0 8rem;
     border-bottom: 1px solid #d5d4d4;
-    margin-bottom: 1rem;    
+    margin-bottom: 1rem;  
+    height: 4rem;  
 }
 
 #navbar-left {
@@ -16,7 +17,8 @@ body {
 }
 
 #logo {
-    font-size: 16px;
+	font-family: 'Bangers';
+    font-size: 32px;
 }
 
 a#logo:link {
@@ -25,6 +27,10 @@ a#logo:link {
 }
 
 a#logo:hover {
+    color: #000000;
+}
+
+a#logo:visited {
     color: #000000;
 }
 
@@ -40,6 +46,10 @@ a.navbar-link:link {
 
 a.navbar-link:hover {
     color: #4d0c7c;
+}
+
+a.navbar-link:visited {
+	color: #000000;
 }
 
 .navbar-link {

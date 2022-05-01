@@ -28,9 +28,11 @@
         // search through the database and find the matching restaurant
         // search through data base and find according to category its corresponding name
         
-	    String searchText = request.getParameter("searchText");
-		String searchBy = request.getParameter("searchBy");
-		String orderBy = request.getParameter("orderBy");
+		
+	    String searchText = request.getParameter("text-box");
+    	searchText = (String)session.getAttribute("searchText");
+    	
+    	System.out.println(searchText);
 		
 		String username = "";
 		Cookie cookies[] = request.getCookies();
@@ -81,37 +83,21 @@
         </div>
     </div>
 
-	<form action="SearchDispatcher" method="GET">
-	    <div class="search">
-	        <div id="horizontal">
-	            <div id="drop-down">
-	                <select name="searchBy" id="searchBy" required>
-	                    <option value="1">Name</option>
-	                    <option value="2">Rating</option>
-	                </select>
-	            </div>
-	            <div id="search-bar">
-	            	<input type="text" name="searchText" id="searchText" required>
-	            </div>
-	        </div>
-	        <div id="search-button">
-	            <button type="submit"><i class="fa fa-search"></i></button>
-	        </div>
-	        <div id="radio-button2">
-            <input type="radio" id="name" name="orderBy" value="name" required>
-            <label for="name">Name</label><br>
-            <input type="radio" id="overall_rating" name="orderBy" value="overall_rating" required>
-            <label for="overall_rating">Rating</label><br>
+	    <div id="search">
+        <div id="search-text">
+            <p>Enter a name to see the comments</p>
         </div>
-        <div id="radio-button1">
-            <input type="radio" id="rating_count" name="orderBy" value="rating_count" required>
-            <label for="rating_count">Rating Count</label>
+        <div id="search-box">
+            <form action="SearchServlet" method="GET">
+                <div id="search-text-box">
+                    <input type="text" name="text-box" id="text-box" placeholder="Name">
+                </div>
+            </form>
         </div>
-	    </div>
-	</form>
+    </div>
 	
 	<div id="search-main">
-	    <h1>Results for <%= searchText %> in <%= searchBy %></h1>
+	    <h1>Results for <%= searchText %></h1>
 	    <hr>
 	    <!--  loop through all of the search results  -->
 	    <%    

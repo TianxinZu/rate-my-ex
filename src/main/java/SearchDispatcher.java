@@ -14,12 +14,13 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 import Util.*; 
 /**
  * Servlet implementation class SearchDispatcher
  */
-@WebServlet("/SearchDispatcher")
+@WebServlet("/SearchServlet")
 public class SearchDispatcher extends HttpServlet {
     @Serial
     private static final long serialVersionUID = 1L;
@@ -47,16 +48,10 @@ public class SearchDispatcher extends HttpServlet {
             throws ServletException, IOException {
         // TODO
     	response.setContentType("text/html");
-		String searchText = request.getParameter("searchText");
-		String searchBy = request.getParameter("searchBy");
-		String orderBy = request.getParameter("orderBy");
+		String searchText = request.getParameter("text-box");
 		
-		if(searchBy.equals("1")) {
-			searchBy = "name";
-		}
-		else {
-			searchBy = "overall_rating";
-		}
+		System.out.println(searchText);
+		
 		
 		try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -64,33 +59,43 @@ public class SearchDispatcher extends HttpServlet {
             e.printStackTrace();
         }
 		
-		String mysql = "SELECT * FROM Person WHERE ? LIKE ? ORDER BY ? DESC";
+		String mysql = "SELECT * FROM Person WHERE name LIKE ?";
 		
 		try (Connection conn = DriverManager.getConnection(Util.Constant.Url, Util.Constant.DBUserName, Util.Constant.DBPassword);
 	      	       PreparedStatement ps = conn.prepareStatement(mysql);){
 			
-			ps.setString(1, searchBy);
 			ps.setString(2, "%"+searchText+"%");
-			ps.setString(3, orderBy);
 			
 			ResultSet myresult = ps.executeQuery();
 			
-			Util.Helper.myList.clear();
+			Util.Helper.myList = new ArrayList<Person>();
+			
+			if(Util.Helper.myList == null) {
+				System.out.println("NULL");
+				System.exit(0);
+			}
 			
 			while(myresult.next()) {
 				Person temp = new Person(myresult.getInt(1), myresult.getString(2), myresult.getString(3), myresult.getDouble(4), myresult.getInt(5));
 				Util.Helper.myList.add(temp);
+				
 			}
+			
+			
+			
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
 		
+		//Util.Helper.myList = new ArrayList<Person>();
+		//Person test = new Person(1, "1", "1", 1.0, 1);
+		//Util.Helper.myList.add(test);
+		//System.out.println(Util.Helper.myList.size());
+		
 		// store search criterias, all should be string
 		HttpSession session = request.getSession(); // if we need to getSession or not
 		session.setAttribute("searchText", searchText);
-		session.setAttribute("searchBy", searchBy);
-		session.setAttribute("orderBy", orderBy);
 		
 		request.getRequestDispatcher("/results.jsp").forward(request, response);
     }

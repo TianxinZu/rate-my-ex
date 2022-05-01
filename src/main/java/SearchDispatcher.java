@@ -64,7 +64,7 @@ public class SearchDispatcher extends HttpServlet {
 		try (Connection conn = DriverManager.getConnection(Util.Constant.Url, Util.Constant.DBUserName, Util.Constant.DBPassword);
 	      	       PreparedStatement ps = conn.prepareStatement(mysql);){
 			
-			ps.setString(2, "%"+searchText+"%");
+			ps.setString(1, "%"+searchText+"%");
 			
 			ResultSet myresult = ps.executeQuery();
 			

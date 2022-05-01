@@ -48,7 +48,7 @@
         <div id="search-box">
             <form action="SearchServlet" method="GET">
                 <div id="search-text-box">
-                    <input type="text" id="text-box" placeholder="Name">
+                    <input type="text" name="text-box" id="text-box" placeholder="Name">
                 </div>
             </form>
         </div>

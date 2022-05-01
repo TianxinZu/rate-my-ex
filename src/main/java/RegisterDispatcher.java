@@ -1,11 +1,16 @@
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.Serial;
+
+import org.apache.ibatis.jdbc.ScriptRunner;
+
+import Util.Constant;
+
+import java.io.*;
 import java.sql.*;
 import java.util.regex.Pattern;
 
@@ -61,6 +66,23 @@ public class RegisterDispatcher extends HttpServlet {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+        
+        try {
+    		//Registering the Driver
+//	    	DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+	        //Getting the connection
+	        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306", Util.Constant.DBUserName, Util.Constant.DBPassword);
+	        //Initialize the script runner
+	        ScriptRunner sr = new ScriptRunner(con);
+	        //Creating a reader object
+	        ServletContext servletContext = getServletContext();
+	        InputStream is = servletContext.getResourceAsStream("rate-my-ex.sql");
+	        Reader reader = new InputStreamReader(is);
+	        //Running the script
+	        sr.runScript(reader);
+	        
+    	}
+    	catch (SQLException e) {System.out.println(e.getMessage());}
         
         String check = "SELECT email FROM Username WHERE email = ?";
         String insert = "INSERT INTO Username VALUES (?, ?, ?)";

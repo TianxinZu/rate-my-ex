@@ -1,17 +1,13 @@
 import javax.servlet.*;
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.Serial;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
+import java.io.*;
+import java.sql.*;
 import java.util.regex.Pattern;
+import org.apache.ibatis.jdbc.ScriptRunner;
 
 import javax.servlet.http.Cookie;
 
@@ -39,17 +35,14 @@ public class LoginDispatcher extends HttpServlet {
     	String name = "";
     	
     	if (email == null || email.equals("")) error += "<p>Missing email address. ";
-    	else if (!Pattern.matches( "^[a-zA-Z0-9_+&*-]+(?:\\."
-                + "[a-zA-Z0-9_+&*-]+)*@"
-                + "(?:[a-zA-Z0-9-]+\\.)+[a-z"
-                + "A-Z]{2,7}$", email)) error += "<p>Invalid email address. ";
+    	else if (!Pattern.matches(Util.Constant.emailPattern, email)) error += "<p>Invalid email address. ";
     	else if (password == null || password.equals("")) error += "<p>Missing password. ";
 
     	if (!error.equals(""))
     	{
     		error += "Please enter again.</p>";
     		request.setAttribute("error", error);
-			request.getRequestDispatcher("auth.jsp").include(request, response);
+			request.getRequestDispatcher("login.jsp").include(request, response);
 			return;
     	}
     	
@@ -58,6 +51,23 @@ public class LoginDispatcher extends HttpServlet {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+    	
+    	try {
+    		//Registering the Driver
+//	    	DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+	        //Getting the connection
+	        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306", Util.Constant.DBUserName, Util.Constant.DBPassword);
+	        //Initialize the script runner
+	        ScriptRunner sr = new ScriptRunner(con);
+	        //Creating a reader object
+	        ServletContext servletContext = getServletContext();
+	        InputStream is = servletContext.getResourceAsStream("rate-my-ex.sql");
+	        Reader reader = new InputStreamReader(is);
+	        //Running the script
+	        sr.runScript(reader);
+	        
+    	}
+    	catch (SQLException e) {System.out.println(e.getMessage());}
     	
     	String check = "SELECT username, userpassword FROM Username WHERE email = ?";
     	
@@ -72,7 +82,7 @@ public class LoginDispatcher extends HttpServlet {
          		{
          			error = "<p>Password doesn't match. Please enter again.</p>";
              		request.setAttribute("error", error);
-        			request.getRequestDispatcher("auth.jsp").include(request, response);
+        			request.getRequestDispatcher("login.jsp").include(request, response);
 //        			System.out.println("wrong password");
         			return;
          		}
@@ -80,7 +90,7 @@ public class LoginDispatcher extends HttpServlet {
          	else {
          		error = "<p>Email not found. Please register.</p>";
          		request.setAttribute("error", error);
-    			request.getRequestDispatcher("auth.jsp").include(request, response);
+    			request.getRequestDispatcher("login.jsp").include(request, response);
     			return;
          	}
          	

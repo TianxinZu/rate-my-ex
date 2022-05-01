@@ -24,7 +24,7 @@
             <a href="index.jsp" id="logo">Rate my ex</a>
             <%
             	if (!username.equals("")) {
-            		out.print("Hi "+ username + "!");
+            		out.print("<span id=\"welcome\">Hi, "+ username + "!</span>");
             	}
             %>
         </div>

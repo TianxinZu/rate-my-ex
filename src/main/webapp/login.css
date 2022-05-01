@@ -30,6 +30,7 @@
 	width: 81%;
 	height: 3rem;
 	text-align: center;	
+	cursor: pointer;
 }
 
 .fa-user-plus {
@@ -44,6 +45,7 @@
 	border: none;
 	color: white;
 	text-align: center;
+	cursor: pointer;
 }
 
 .login-header {

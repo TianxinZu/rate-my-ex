@@ -1,0 +1,28 @@
+#chat {
+    padding: 1rem 16rem;
+    place-items: center;
+}
+
+#chat-text-box {
+    display: flex;
+    width: 100%;
+    margin: 0 auto;
+}
+
+#chat-box {
+    box-sizing: border-box;
+    padding: 5px 5px;
+    width: 100%;
+}
+
+#chat-name {
+	text-align: center;
+}
+
+#chat-history {
+	display: flex;
+    align-items: center;
+    padding: 0 8rem;
+    border-bottom: 1px solid #d5d4d4;
+    height: 35rem; 
+}

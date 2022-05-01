@@ -50,7 +50,7 @@ public class SearchDispatcher extends HttpServlet {
     	response.setContentType("text/html");
 		String searchText = request.getParameter("text-box");
 		
-		System.out.println(searchText);
+		//System.out.println(searchText);
 		
 		
 		try {
@@ -89,8 +89,8 @@ public class SearchDispatcher extends HttpServlet {
 		}
 		
 		//Util.Helper.myList = new ArrayList<Person>();
-		//Person test = new Person(1, "1", "1", 1.0, 1);
-		//Util.Helper.myList.add(test);
+		Person test = new Person(1, "1", "1", 1.0, 1);
+		Util.Helper.myList.add(test);
 		//System.out.println(Util.Helper.myList.size());
 		
 		// store search criterias, all should be string

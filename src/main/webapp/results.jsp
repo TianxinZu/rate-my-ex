@@ -11,19 +11,18 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="index.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bangers">
     <title>Search</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-            href="https://fonts.googleapis.com/css2?family=Lobster&family=Roboto:wght@300&display=swap"
-            rel="stylesheet">
-    <link rel="stylesheet" href="index.css">
-    <script src="https://kit.fontawesome.com/3204349982.js"
-            crossorigin="anonymous"></script>
-	<script src="https://apis.google.com/js/platform.js" async defer></script>
-    <meta name="google-signin-client_id" content="49497119558-qa34tucl46nbq34fmbeipto8s1a2scup.apps.googleusercontent.com">
     
-    <%
+</head>
+<body>
+	<!-- TODO -->
+	
+	<%
         //TODO perform search
         // search through the database and find the matching restaurant
         // search through data base and find according to category its corresponding name
@@ -43,30 +42,13 @@
 	    }
 		
     %>
-</head>
-<body>
-	<!-- TODO -->
-	<div class="g-signin2" style="display: none;"></div>
-     <br><br><br>
-      <p id="name"></p>
-      <div id="status">
-   </div>
-   <script type="text/javascript">
-      function onSignIn(googleUser) {
-      
-	      var profile = googleUser.getBasicProfile();
-	      var imagurl=profile.getImageUrl();
-	      var name=profile.getName();
-	      var email=profile.getEmail();
-      }  
-	</script>
 	
 	<div id="navbar">
         <div id="navbar-left">
             <a href="index.jsp" id="logo">Rate my ex</a>
             <%
             	if (!username.equals("")) {
-            		out.print("Hi "+ username + "!");
+            		out.print("<span id=\"welcome\">Hi, "+ username + "!</span>");
             	}
             %>
         </div>

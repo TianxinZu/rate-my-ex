@@ -1,0 +1,81 @@
+@charset "ISO-8859-1";
+
+#navbar {
+	display: flex;
+    align-items: center;
+    padding: 0 8rem;
+    border-bottom: 1px solid #d5d4d4;
+    height: 4rem;  
+}
+
+#navbar-left {
+    margin-right: auto;
+    padding: 1rem;
+}
+
+#logo {
+	font-family: 'Bangers';
+    font-size: 32px;
+}
+
+a#logo:link {
+    text-decoration: none; 
+    color: #000000;
+}
+
+a#logo:hover {
+    color: #000000;
+}
+
+a#logo:visited {
+    color: #000000;
+}
+
+#welcome {
+	text-align: center;
+	padding: 1rem;
+	vertical-align: super;
+}
+
+#navbar-right {
+    margin-left: auto;
+    padding: 1rem;
+}
+
+a.navbar-link:link {
+    text-decoration: none; 
+    color: #000000;
+}
+
+a.navbar-link:hover {
+    color: #4d0c7c;
+}
+
+a.navbar-link:visited {
+	color: #000000;
+}
+
+.navbar-link {
+	margin: 10px;
+}
+
+#search {
+    padding: 1rem 16rem;
+    place-items: center;
+}
+
+#search-text {
+    text-align: center;
+}
+
+#search-text-box {
+    display: flex;
+    width: 40%;
+    margin: 0 auto;
+}
+
+#text-box {
+    box-sizing: border-box;
+    padding: 10px 10px;
+    width: 100%;
+}

@@ -121,5 +121,19 @@
         	</div>
     	</div>
 	</div>
+	
+	<div id="add">
+		<form action="AddDispatcher" method="GET">
+    		<h1 class="add-header">Add a comment</h1>
+    		<p>Comment</p>
+    		<textarea id="comment" name="comment" rows="4" cols="50"></textarea>
+    		<br/><br/>
+    		<p>Rating from 0 to 10</p>
+    		<input type="range" id="rating" name="rating"
+         	min="0" max="10">
+    		<br/><br/>
+    		<button type="submit" name="submit" class="regbutton"><i class="fa fa-sign-in"></i>    Submit</button>
+    	</form>
+	</div>
 </body>
 </html>

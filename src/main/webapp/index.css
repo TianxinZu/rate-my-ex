@@ -63,8 +63,16 @@ a.navbar-link:visited {
 }
 
 #search {
-    padding: 1rem 16rem;
-    place-items: center;
+    padding: 5rem 16rem;
+    align-items : center;
+    background-image: url("background.jpg");
+    background-repeat: no-repeat, no-repeat;
+    background-position: center;
+    height: 30rem;
+}
+
+#search-description {
+	padding: 18rem 0;
 }
 
 #search-text {

@@ -40,18 +40,19 @@
             %>
         </div>
     </div>
-    <!-- insert a picture -->
     <div id="search">
-        <div id="search-text">
-            <p>Enter a name to see the comments</p>
-        </div>
-        <div id="search-box">
-            <form action="SearchServlet" method="GET">
-                <div id="search-text-box">
-                    <input type="text" name="text-box" id="text-box" placeholder="Name">
-                </div>
-            </form>
-        </div>
+    	<div id="search-description">
+	        <div id="search-text">
+	            <p>Enter a name to see the comments</p>
+	        </div>
+	        <div id="search-box">
+	            <form action="SearchServlet" method="GET">
+	                <div id="search-text-box">
+	                    <input type="text" name="text-box" id="text-box" placeholder="Name">
+	                </div>
+	            </form>
+	        </div>
+	    </div>
     </div>
 </body>
 </html> 

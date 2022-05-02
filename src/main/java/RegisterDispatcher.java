@@ -96,7 +96,7 @@ public class RegisterDispatcher extends HttpServlet {
         	{
         		error = "<p>Email was already registered. Please log in.</p>";
         		request.setAttribute("error", error);
-    			request.getRequestDispatcher("auth.jsp").include(request, response);
+    			request.getRequestDispatcher("login.jsp").include(request, response);
     			return;
         	}
         }

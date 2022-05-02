@@ -7,47 +7,17 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Details</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-            href="https://fonts.googleapis.com/css2?family=Lobster&family=Roboto:wght@300&display=swap"
-            rel="stylesheet">
-    <script src="https://kit.fontawesome.com/3204349982.js"
-            crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="index.css">
-    
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <meta name="google-signin-client_id" content="49497119558-qa34tucl46nbq34fmbeipto8s1a2scup.apps.googleusercontent.com">
-    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="detail.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bangers">
+    <title>Detail</title>
     
 </head>
 
-
-
 <body>
 <!-- TODO -->
-
-<div class="g-signin2" data-onsuccess="onSignIn" id="myP" style="display: none;"></div>
-      <br><br><br><br>
-      <p id="name"></p>
-      <div id="status">
-   </div>
-   <script type="text/javascript">
-      function onSignIn(googleUser) {
-      
-      var profile = googleUser.getBasicProfile();
-      var imagurl=profile.getImageUrl();
-      var name=profile.getName();
-      var email=profile.getEmail();
-      //document.getElementById("myImg").src = imagurl;
-      //document.getElementById("name").innerHTML = name;
-      //document.getElementById("myP").style.visibility = "hidden";
-      //document.getElementById("status").innerHTML = 'Welcome '+name+'!<a href=success.jsp?email='+email+'&name='+name+'/>Continue with Google login</a></p>';
-      //window.location.href='success.jsp?email='+email+'&name=' + name;
-   }
-   </script>
-
 	<%
 		String username = "";
 		Cookie cookies[] = request.getCookies();
@@ -95,7 +65,7 @@
             <a href="index.jsp" id="logo">Rate my ex</a>
             <%
             	if (!username.equals("")) {
-            		out.print("Hi "+ username + "!");
+            		out.print("<span id=\"welcome\">Hi, "+ username + "!</span>");
             	}
             %>
         </div>

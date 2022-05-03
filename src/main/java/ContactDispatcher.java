@@ -41,29 +41,50 @@ public class ContactDispatcher extends HttpServlet {
     			if (cookie.getName().equals("userid")) userID = Integer.valueOf(cookie.getValue());
     		}
     	}
-//    	Map<String, ArrayList<Message>> name_to_messages = getMessages(userID, userid_to_username);
+    	Map<Integer, String> userid_to_username = getUsers();
+    	Map<String, ArrayList<Message>> name_to_messages = getMessages(userID, userid_to_username);
+//    	System.out.println(name_to_messages.size());
 //    	for (Map.Entry<String, ArrayList<Message>> entry : name_to_messages.entrySet())
 //    	{
 //    		System.out.println(entry.getValue());
 //    	}
     	response.setContentType("text/html");
-    	String text = request.getParameter("text");
-    	int otherUserID = Integer.valueOf(request.getParameter("otherUserID"));
     	Timestamp createdTime = new Timestamp(System.currentTimeMillis());
-    	if (text != null && !text.isEmpty())
-    	{
-	    	Message message = new Message(text, userID, otherUserID, createdTime);
-	    	message.insertIntoDatabase();
-    	}
+//    	Message message = new Message("Hello World", 1, 2, createdTime);
+//    	message.insertIntoDatabase();
 //    	System.out.println(timestamp.getClass().getName());
 //    	System.out.println(Util.Constant.dateFormat.format(createdTime));
-    	request.setAttribute("messages", name_to_messages.keySet());
-    	response.sendRedirect("chat.jsp");
+    	request.setAttribute("contacts", name_to_messages.keySet());
+    	RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/contacts.jsp");
+    	dispatcher.forward(request, response);
     }
     
-    public ArrayList<Message> getMessages(int userID, int otherUserID)
+    public Map<Integer, String> getUsers()
     {
-    	ArrayList<Message> messages = new ArrayList<Message>();
+    	Map<Integer, String> userid_to_username = new HashMap<>();
+    	try
+    	{
+    		Class.forName("com.mysql.jdbc.Driver");
+			Connection connection = DriverManager.getConnection(Constant.Url, Constant.DBUserName, Constant.DBPassword);
+			String sql = "SELECT userid, username FROM Username";
+			PreparedStatement ps = connection.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next())
+			{
+				int userid = rs.getInt("userid");
+				String username = rs.getString("username");
+				userid_to_username.put(userid, username);
+			}
+			ps.close();
+    	}
+    	catch (Exception e) {e.printStackTrace();}
+    	return userid_to_username;
+    }
+    
+    public Map<String, ArrayList<Message>> getMessages(int userID, Map<Integer, String> userid_to_username)
+    {
+    	Map<String, ArrayList<Message>> name_to_messages = new HashMap<>();
+    	String name = "";
     	try
     	{
     		Class.forName("com.mysql.jdbc.Driver");

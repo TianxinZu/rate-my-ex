@@ -44,7 +44,7 @@
         </div>
         <div id="navbar-right">
             <a href="index.jsp" class="navbar-link">Home</a>
-			<a href="login.jsp" class="navbar-link">login/register</a>
+			<a href="login.jsp" class="navbar-link">Login/Register</a>
         </div>
     </div>
     <% 
@@ -53,7 +53,7 @@
 	%>
 	<div id="login">
 		<form action="LoginDispatcher" method="GET">
-    		<h1 class="login-header">Login</h1>
+    		<h1 class="header">Login</h1>
     		<p>Email</p>
     		<input type="email" name="email" class="userinf">
     		<br/><br/>
@@ -69,7 +69,7 @@
 	</div>
 	<div id="register">
 		<form action="RegisterDispatcher" method="GET">
-    		<h1 class="login-header">Sign Up</h1>
+    		<h1 class="header">Sign Up</h1>
     		<p>Email</p>
     		<input type="email" name="email" class="userinf">
     		<br/><br/>

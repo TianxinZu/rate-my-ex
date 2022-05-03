@@ -133,7 +133,7 @@
 		<form action="AddDispatcher" method="GET">
     		<h1 class="add-header">Add a comment</h1>
     		<p>Comment</p>
-    		<textarea id="comment" name="comment" rows="4" cols="50"></textarea>
+    		<textarea id="comment" name="comment" rows="4" cols="50" required></textarea>
     		<br/><br/>
     		<p>Rating from 0 to 10</p>
     		<input type="range" id="rating" name="rating"

@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import Util.*;
+
 @WebServlet("/AddDispatcher")
 public class AddDispatcher extends HttpServlet{
 	public AddDispatcher() {}
@@ -70,6 +72,9 @@ public class AddDispatcher extends HttpServlet{
 	        	ps.execute();
 	        }
 	        catch (SQLException ex) {System.out.println("SQLException: " + ex.getMessage());}
+		
+		Helper myHelper = new Helper();
+		myHelper.recalculate(personid, ratings);
 		
 		response.sendRedirect("detail.jsp?personId="+personid.toString());
 	}

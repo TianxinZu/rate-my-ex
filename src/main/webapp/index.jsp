@@ -7,6 +7,7 @@
     <link href="index.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bangers">
+    <link href="https://fonts.googleapis.com/css2?family=Tapestry&display=swap" rel="stylesheet">
     <title>RATE MY EX</title>
 </head>
 <body>
@@ -35,10 +36,10 @@
             <a href="index.jsp" class="navbar-link">Home</a>
             <%
             	if (!username.equals("")) {
-            		%><a href="LogoutDispatcher" class="navbar-link">logout</a><%
+            		%><a href="LogoutDispatcher" class="navbar-link">Logout</a><%
             	}
             	else {
-            		%><a href="login.jsp" class="navbar-link">login/register</a><%
+            		%><a href="login.jsp" class="navbar-link">Login/Register</a><%
             	}
             %>
         </div>

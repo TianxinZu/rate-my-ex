@@ -69,9 +69,10 @@
     	}
     </script>
     <div id="chat">
-    	<form action="ChatServlet" method="GET">
+    	<form action="ChatDispatcher" method="GET">
     		<div id="chat-text-box">
-    			<input type="text" name="chat-box" id="chat-box" placeholder="Type something ...">
+    			<input type="text" name="text" id="chat-box" placeholder="Type something ...">
+    			<input type="hidden" name="otherUserID" value=<%=ID%>>
     		</div>
     	</form>
     </div>

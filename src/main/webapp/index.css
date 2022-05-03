@@ -1,6 +1,7 @@
 body {
     font-size: 13px;
     margin: 0;
+    background-image: url("webpagebackground.jpeg");
 }
 
 #navbar {
@@ -60,6 +61,7 @@ a.navbar-link:visited {
 
 .navbar-link {
 	margin: 10px;
+	font-size: 15px;
 }
 
 #search {
@@ -79,6 +81,7 @@ a.navbar-link:visited {
     text-align: center;
     font-size: 20px;
     font-family: 'Tapestry', cursive;
+    color: white;
 }
 
 #search-text-box {

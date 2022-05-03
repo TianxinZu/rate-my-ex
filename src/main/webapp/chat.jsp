@@ -1,3 +1,5 @@
+<%@ page import="java.util.*" %>
+<%@ page import="java.util.ArrayList" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,7 +22,8 @@
 	    		if (cookie.getName().equals("username")) username = cookie.getValue().replace("=", " "); 
 	    	}
 	    }
-	    String ID = request.getParameter("userID");
+	    String ID = request.getParameter("otherUserID");
+	    ArrayList<ArrayList<Object>> messages = (ArrayList<ArrayList<Object>>)request.getAttribute("messages");
 	%>
     <div id="navbar">
         <div id="navbar-left">
@@ -47,13 +50,30 @@
     	<p></p><%=ID%>
     </div>
     <div id="chat-history">
-    	<!-- insert chat -->
     	<div id="my-chat">
     		<p>Hi! Nice to meet you! Good Morning! How's it going? What's up?</p>
     	</div>
     	<div id="your-chat">
     		<p>Hello! How are you doing? Good Evening! It's great to see you! Long-time no see!</p>
     	</div>
+    	<%
+    		for(int i=0; i<messages.size(); i++){
+    			if((boolean)(messages.get(i).get(2))){
+    				%>
+    				<div id="my-chat">
+    					<p><%=messages.get(i).get(0)%></p>
+    				</div>
+    				<%
+    			}
+    			else{
+    				%>
+    				<div id="your-chat">
+    					<p><%=messages.get(i).get(0)%></p>
+    				</div>
+    				<%
+    			}
+    		}
+    	%>
     </div>
     <script>
     	setInterval("getMessage()",1000);

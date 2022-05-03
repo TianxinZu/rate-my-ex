@@ -21,7 +21,7 @@ import javax.servlet.http.Cookie;
  * Servlet implementation class LoginDispatcher
  */
 @WebServlet("/ContactDispatcher")
-public class ContactDispatcher extends HttpServlet {
+public class ChatDispatcher extends HttpServlet {
     @Serial
     private static final long serialVersionUID = 1L;
 
@@ -57,41 +57,47 @@ public class ContactDispatcher extends HttpServlet {
     	}
 //    	System.out.println(timestamp.getClass().getName());
 //    	System.out.println(Util.Constant.dateFormat.format(createdTime));
-    	request.setAttribute("messages", name_to_messages.keySet());
-    	response.sendRedirect("chat.jsp");
+    	ArrayList<ArrayList<Object>> messages = getMessages(userID, otherUserID);
+    	request.setAttribute("messages", messages);
+    	RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/chat.jsp");
+    	dispatcher.forward(request, response);
     }
     
-    public ArrayList<Message> getMessages(int userID, int otherUserID)
+    public ArrayList<ArrayList<Object>> getMessages(int userID, int otherUserID)
     {
-    	ArrayList<Message> messages = new ArrayList<Message>();
+    	ArrayList<ArrayList<Object>> messages = new ArrayList<ArrayList<Object>>();
     	try
     	{
     		Class.forName("com.mysql.jdbc.Driver");
 			Connection connection = DriverManager.getConnection(Constant.Url, Constant.DBUserName, Constant.DBPassword);
-			String sql = "SELECT * FROM Message WHERE senderID = ? OR receiverID = ?";
+			String sql = "SELECT * FROM Message WHERE (senderID = ? OR receiverID = ?) AND (senderID = ? OR receiverID = ?)";
 			PreparedStatement ps = connection.prepareStatement(sql);
 			ps.setInt(1, userID);
 			ps.setInt(2, userID);
+			ps.setInt(3, otherUserID);
+			ps.setInt(4, otherUserID);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next())
 			{
 				String text = rs.getString("text");
 				int senderID = rs.getInt("senderID");
-				int receiverID = rs.getInt("receiverID");
-				Timestamp createdTime = rs.getTimestamp("createdTime");
-				Message message = new Message(text, senderID, receiverID, createdTime);
-				int otherUserID = senderID == userID ? receiverID : senderID;
-				String otherUserName = userid_to_username.get(otherUserID);
-				if (otherUserName != null)
+				Timestamp tempCreatedTime = rs.getTimestamp("createdTime");
+				String createdTime = Util.Constant.dateFormat.format(tempCreatedTime);
+				Boolean send = false;
+				if (senderID == userID)
 				{
-					if (!name_to_messages.containsKey(otherUserName)) name_to_messages.put(otherUserName, new ArrayList<Message>());
-					name_to_messages.get(otherUserName).add(message);
+					send = true;
 				}
+				ArrayList<Object> message = new ArrayList<Object>();
+				message.add(text);
+				message.add(createdTime);
+				message.add(send);
+				messages.add(message);
 			}
 			ps.close();
     	}
     	catch (Exception e) {e.printStackTrace();}
-    	return name_to_messages;
+    	return messages;
     }
 
     /**

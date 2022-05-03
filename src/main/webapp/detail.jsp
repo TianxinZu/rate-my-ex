@@ -32,6 +32,7 @@
 	    for(int i = 0; i < Util.Helper.myList.size(); i++){
 	    	if(Helper.myList.get(i).personid.toString().equals(found)){
 	    		myPerson = Util.Helper.myList.get(i);
+	    		break;
 	    	}
 	    }
 	    
@@ -41,24 +42,38 @@
             e.printStackTrace();
         }
 	    
-		String mysql = "SELECT description FROM Post WHERE personid = ?";
+	    double rating = 0.0;
+	    Integer count = 0;
+		String mysql = "SELECT description, userid FROM Post WHERE personid = ?";
+		String mysql2 = "SELECT overall_rating, rating_count FROM Person WHERE personid = ?";
 		List<String> comments = new ArrayList<String>();
+		List<Integer> userIDs = new ArrayList<Integer>();
 		
 		try (Connection conn = DriverManager.getConnection(Util.Constant.Url, Util.Constant.DBUserName, Util.Constant.DBPassword);
-	      	       PreparedStatement ps = conn.prepareStatement(mysql);){
+	      	       PreparedStatement ps = conn.prepareStatement(mysql); PreparedStatement ps2 = conn.prepareStatement(mysql2);){
 			
 			ps.setInt(1, myPerson.personid);
+			ps2.setInt(1, myPerson.personid);
 			
 			ResultSet myresult = ps.executeQuery();
-			
+			ResultSet myresult2 = ps2.executeQuery();
 			
 			while(myresult.next()) {
 				comments.add(myresult.getString(1));
+				userIDs.add(myresult.getInt(2));
 			}
+			
+			myresult2.next();
+			rating = myresult2.getDouble(1);
+			count = myresult2.getInt(2);
+			//System.out.println(rating);
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
+		
+		session = request.getSession(); 
+		session.setAttribute("personid", myPerson.personid);
 	%>
     <div id="navbar">
         <div id="navbar-left">
@@ -104,9 +119,9 @@
 	            <p>Gender: 
 	            <%= myPerson.gender %></p >
 	            <p>Review Count:
-				<%= myPerson.rating_count%></p >
+				<%= count%></p >
 	            <p>Rating: 
-	             <% double rating = myPerson.overall_rating;
+	             <% 
              		for (int i=0; i < (int)rating; i++){%>
               			<span class="fa fa-star checked"></span>
              		<% } %>
@@ -116,10 +131,26 @@
              	<p>Comments: 
 	             <% 
              		for (int i=0; i < comments.size(); i++){%>
+             			<a href="chat.jsp?userID=<%= userIDs.get(i)%>"><%= userIDs.get(i) %></a>
               			<p><%= comments.get(i) %></p>
+              			<br>
              		<% } %>
         	</div>
     	</div>
+	</div>
+	
+	<div id="add">
+		<form action="AddDispatcher" method="GET">
+    		<h1 class="add-header">Add a comment</h1>
+    		<p>Comment</p>
+    		<textarea id="comment" name="comment" rows="4" cols="50" required></textarea>
+    		<br/><br/>
+    		<p>Rating from 0 to 10</p>
+    		<input type="range" id="rating" name="rating"
+         	min="0" max="10">
+    		<br/><br/>
+    		<button type="submit" name="submit" class="regbutton"><i class="fa fa-sign-in"></i>    Submit</button>
+    	</form>
 	</div>
 </body>
 </html>

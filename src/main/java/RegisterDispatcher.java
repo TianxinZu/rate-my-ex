@@ -43,6 +43,7 @@ public class RegisterDispatcher extends HttpServlet {
         String confirmedPassword = request.getParameter("confirmed_password");
         String[] terms = request.getParameterValues("terms");
         String error = "";
+        Integer userid = 0;
         
         if (email == null || email.equals("")) error += "<p>Missing email address. ";
         else if (!Pattern.matches(Util.Constant.emailPattern, email)) error += "<p>Invalid email address. ";
@@ -80,12 +81,31 @@ public class RegisterDispatcher extends HttpServlet {
 	        Reader reader = new InputStreamReader(is);
 	        //Running the script
 	        sr.runScript(reader);
-	        
+	        con.close();
+    	}
+    	catch (SQLException e) {System.out.println(e.getMessage());}
+        
+        try {
+        	if(Util.Helper.flag) {
+        		System.out.println("Init");
+    		//Registering the Driver
+//	    	DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+	        //Getting the connection
+	        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306", Util.Constant.DBUserName, Util.Constant.DBPassword);
+	        //Initialize the script runner
+	        ScriptRunner sr = new ScriptRunner(con);
+	        //Creating a reader object
+	        ServletContext servletContext = getServletContext();
+	        InputStream is = servletContext.getResourceAsStream("origin.sql");
+	        Reader reader = new InputStreamReader(is);
+	        //Running the script
+	        sr.runScript(reader);
+        	}
     	}
     	catch (SQLException e) {System.out.println(e.getMessage());}
         
         String check = "SELECT email FROM Username WHERE email = ?";
-        String insert = "INSERT INTO Username VALUES (?, ?, ?)";
+        String insert = "INSERT INTO Username (email, username, userpassword) VALUES (?, ?, ?)";
         
         try (Connection conn = DriverManager.getConnection(Util.Constant.Url, Util.Constant.DBUserName, Util.Constant.DBPassword);
      	       PreparedStatement ps = conn.prepareStatement(check);) 
@@ -96,9 +116,10 @@ public class RegisterDispatcher extends HttpServlet {
         	{
         		error = "<p>Email was already registered. Please log in.</p>";
         		request.setAttribute("error", error);
-    			request.getRequestDispatcher("auth.jsp").include(request, response);
+    			request.getRequestDispatcher("login.jsp").include(request, response);
     			return;
         	}
+        	
         }
         catch (SQLException ex) {System.out.println("SQLException: " + ex.getMessage());}
         
@@ -115,9 +136,27 @@ public class RegisterDispatcher extends HttpServlet {
         	System.out.println ("SQLException: " + ex.getMessage());
         }
         
+        String getID = "SELECT userid FROM Username WHERE email = ?";
+        try (Connection conn = DriverManager.getConnection(Util.Constant.Url, Util.Constant.DBUserName, Util.Constant.DBPassword);
+     	       PreparedStatement ps = conn.prepareStatement(getID);) 
+        {
+        	ps.setString(1, email);
+        	ResultSet rs = ps.executeQuery();
+        	rs.next();
+        	userid = rs.getInt("userid");
+        } 
+        catch (SQLException ex) 
+        {
+        	System.out.println ("SQLException: " + ex.getMessage());
+        }
+        
         Cookie cookie = new Cookie("username",name);
 		cookie.setMaxAge(3600);
 		response.addCookie(cookie);
+		
+    	String userID = userid.toString();
+    	Cookie mycookie = new Cookie("userid", userID);
+    	response.addCookie(mycookie);
 		//request.getRequestDispatcher("index.jsp").forward(request, response);
 		response.sendRedirect("index.jsp");
     }

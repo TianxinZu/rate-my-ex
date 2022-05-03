@@ -11,6 +11,9 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import Util.*;
 
 @WebServlet("/AddDispatcher")
 public class AddDispatcher extends HttpServlet{
@@ -38,19 +41,42 @@ public class AddDispatcher extends HttpServlet{
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-		String insert ="INSERT INTO BIAO2 VALUES (?,?)";
 		
-		int personID=999999;
+		HttpSession session = request.getSession();
+		Integer personid = (Integer)session.getAttribute("personid");
+		String comments = request.getParameter("comment");
+		String rating = request.getParameter("rating");
+		int ratings = Integer.parseInt(rating);
+		Double myRating = (double) ratings;
+		
+		String userID = "";
+		Cookie cookies[] = request.getCookies();
+	    if (cookies != null) {
+	    	for (Cookie cookie : cookies) {
+	    		if (cookie.getName().equals("userid")) userID = cookie.getValue(); 
+	    	}
+	    }
+	    
+	    Integer userid = Integer.parseInt(userID);
+		
+		String insert ="INSERT INTO Post (personid, userid, description, rating) VALUES (?,?,?,?)";
+
 		
 		try (Connection conn = DriverManager.getConnection(Util.Constant.Url, Util.Constant.DBUserName, Util.Constant.DBPassword);
 	     	       PreparedStatement ps = conn.prepareStatement(insert);) 
 	        {
-	        	ps.setString(1, des);
-	        	ps.setInt(2, personID);
-	        	ResultSet rs = ps.executeQuery();
-	        	
+				ps.setInt(1, personid);
+				ps.setInt(2, userid);
+	        	ps.setString(3, comments);
+	        	ps.setDouble(4, myRating);
+	        	ps.execute();
 	        }
 	        catch (SQLException ex) {System.out.println("SQLException: " + ex.getMessage());}
+		
+		Helper myHelper = new Helper();
+		myHelper.recalculate(personid, ratings);
+		
+		response.sendRedirect("detail.jsp?personId="+personid.toString());
 	}
 	
 	@Override

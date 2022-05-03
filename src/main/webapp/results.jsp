@@ -112,6 +112,8 @@
 		     <hr>
 	     <% } %>
 	</div>
+	
+	<a href="write.jsp">Didn't find the one you are looking for?</a>
 
 </body>
 </html>

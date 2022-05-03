@@ -83,10 +83,15 @@ a.navbar-link:visited {
     display: flex;
     width: 40%;
     margin: 0 auto;
+    
 }
 
 #text-box {
     box-sizing: border-box;
     padding: 10px 10px;
     width: 100%;
+    border-radius: 3px;
+    border-width: 1px;
+    border-color: #000000;
+    border-style:solid;
 }

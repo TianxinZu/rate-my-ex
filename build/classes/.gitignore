@@ -1,5 +1,8 @@
-/Util/
-<<<<<<< HEAD
+/AddDispatcher.class
+/CreateDispatcher.class
+/GoogleDispatcher.class
+/LoginDispatcher.class
+/LogoutDispatcher.class
+/RegisterDispatcher.class
 /SearchDispatcher.class
-=======
->>>>>>> 755c9621ce4e02892234c9b4ecbfc678c6c25a42
+/Util/

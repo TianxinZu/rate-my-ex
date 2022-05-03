@@ -150,7 +150,7 @@ public class RegisterDispatcher extends HttpServlet {
         	System.out.println ("SQLException: " + ex.getMessage());
         }
         
-        Cookie cookie = new Cookie("username",name);
+        Cookie cookie = new Cookie("username", name.replace(" ", "="));
 		cookie.setMaxAge(3600);
 		response.addCookie(cookie);
 		

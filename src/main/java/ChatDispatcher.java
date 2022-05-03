@@ -47,20 +47,23 @@ public class ContactDispatcher extends HttpServlet {
 //    		System.out.println(entry.getValue());
 //    	}
     	response.setContentType("text/html");
-    	String text = request.getAttribute("text");
+    	String text = request.getParameter("text");
+    	int otherUserID = Integer.valueOf(request.getParameter("otherUserID"));
     	Timestamp createdTime = new Timestamp(System.currentTimeMillis());
-//    	Message message = new Message("Hello World", 1, 2, createdTime);
-//    	message.insertIntoDatabase();
+    	if (text != null && !text.isEmpty())
+    	{
+	    	Message message = new Message(text, userID, otherUserID, createdTime);
+	    	message.insertIntoDatabase();
+    	}
 //    	System.out.println(timestamp.getClass().getName());
 //    	System.out.println(Util.Constant.dateFormat.format(createdTime));
-    	request.setAttribute("contacts", name_to_messages.keySet());
+    	request.setAttribute("messages", name_to_messages.keySet());
     	response.sendRedirect("chat.jsp");
     }
     
-    public Map<String, ArrayList<Message>> getMessages(int userID, Map<Integer, String> userid_to_username)
+    public ArrayList<Message> getMessages(int userID, int otherUserID)
     {
-    	Map<String, ArrayList<Message>> name_to_messages = new HashMap<>();
-    	String name = "";
+    	ArrayList<Message> messages = new ArrayList<Message>();
     	try
     	{
     		Class.forName("com.mysql.jdbc.Driver");

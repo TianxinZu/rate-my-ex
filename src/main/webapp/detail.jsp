@@ -41,8 +41,9 @@
             e.printStackTrace();
         }
 	    
-		String mysql = "SELECT description FROM Post WHERE personid = ?";
+		String mysql = "SELECT description, userid FROM Post WHERE personid = ?";
 		List<String> comments = new ArrayList<String>();
+		List<Integer> userIDs = new ArrayList<Integer>();
 		
 		try (Connection conn = DriverManager.getConnection(Util.Constant.Url, Util.Constant.DBUserName, Util.Constant.DBPassword);
 	      	       PreparedStatement ps = conn.prepareStatement(mysql);){
@@ -54,6 +55,7 @@
 			
 			while(myresult.next()) {
 				comments.add(myresult.getString(1));
+				userIDs.add(myresult.getInt(2));
 			}
 		}
 		catch(Exception e) {
@@ -119,7 +121,9 @@
              	<p>Comments: 
 	             <% 
              		for (int i=0; i < comments.size(); i++){%>
+             			<a href="chat.jsp?userID=<%= userIDs.get(i)%>"><%= userIDs.get(i) %></a>
               			<p><%= comments.get(i) %></p>
+              			<br>
              		<% } %>
         	</div>
     	</div>

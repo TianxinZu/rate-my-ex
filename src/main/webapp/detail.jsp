@@ -32,6 +32,7 @@
 	    for(int i = 0; i < Util.Helper.myList.size(); i++){
 	    	if(Helper.myList.get(i).personid.toString().equals(found)){
 	    		myPerson = Util.Helper.myList.get(i);
+	    		break;
 	    	}
 	    }
 	    
@@ -41,22 +42,31 @@
             e.printStackTrace();
         }
 	    
+	    double rating = 0.0;
+	    Integer count = 0;
 		String mysql = "SELECT description, userid FROM Post WHERE personid = ?";
+		String mysql2 = "SELECT overall_rating, rating_count FROM Person WHERE personid = ?";
 		List<String> comments = new ArrayList<String>();
 		List<Integer> userIDs = new ArrayList<Integer>();
 		
 		try (Connection conn = DriverManager.getConnection(Util.Constant.Url, Util.Constant.DBUserName, Util.Constant.DBPassword);
-	      	       PreparedStatement ps = conn.prepareStatement(mysql);){
+	      	       PreparedStatement ps = conn.prepareStatement(mysql); PreparedStatement ps2 = conn.prepareStatement(mysql2);){
 			
 			ps.setInt(1, myPerson.personid);
+			ps2.setInt(1, myPerson.personid);
 			
 			ResultSet myresult = ps.executeQuery();
-			
+			ResultSet myresult2 = ps2.executeQuery();
 			
 			while(myresult.next()) {
 				comments.add(myresult.getString(1));
 				userIDs.add(myresult.getInt(2));
 			}
+			
+			myresult2.next();
+			rating = myresult2.getDouble(1);
+			count = myresult2.getInt(2);
+			//System.out.println(rating);
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -109,9 +119,9 @@
 	            <p>Gender: 
 	            <%= myPerson.gender %></p >
 	            <p>Review Count:
-				<%= myPerson.rating_count%></p >
+				<%= count%></p >
 	            <p>Rating: 
-	             <% double rating = myPerson.overall_rating;
+	             <% 
              		for (int i=0; i < (int)rating; i++){%>
               			<span class="fa fa-star checked"></span>
              		<% } %>

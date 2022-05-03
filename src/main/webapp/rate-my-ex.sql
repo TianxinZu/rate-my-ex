@@ -10,7 +10,7 @@ CREATE TABLE Username (
 );
 
 CREATE TABLE Person (
-	personid INT(100) NOT NULL,
+	personid INT(100) NOT NULL AUTO_INCREMENT,
 	name VARCHAR(100) NOT NULL,
 	gender VARCHAR(100) NOT NULL,
 	overall_rating DOUBLE(100, 2) NOT NULL,

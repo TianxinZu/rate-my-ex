@@ -1,6 +1,20 @@
 package Util;
 
 import java.util.List;
+
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.ibatis.jdbc.ScriptRunner;
+
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -10,6 +24,7 @@ import java.util.ArrayList;
 
 public class Helper {
 	public static List<Person> myList;
+	public static boolean flag = true;
 	
 	public Helper() {
 		
@@ -22,7 +37,7 @@ public class Helper {
             e.printStackTrace();
         }
     	
-    	String check = "SELECT * FROM Post WHERE personid = ?";
+    	String check = "SELECT rating_count FROM Person WHERE personid = ?";
     	Integer count = 0;
     	
     	try (Connection conn = DriverManager.getConnection(Util.Constant.Url, Util.Constant.DBUserName, Util.Constant.DBPassword);
@@ -30,9 +45,8 @@ public class Helper {
          {
           	ps.setInt(1, personID);
           	ResultSet rs = ps.executeQuery();
-          	while(rs.next()) {
-          		count++;
-          	}
+          	rs.next();
+          	count = rs.getInt(1);
          }
     	 catch (SQLException ex) {System.out.println("SQLException: " + ex.getMessage());}
     	
@@ -49,6 +63,11 @@ public class Helper {
      	 catch (SQLException ex) {System.out.println("SQLException: " + ex.getMessage());}
     	
     	Double newRating = (overRating * count + rating)/(count+1);
+    	System.out.println(count);
+    	//System.out.println(overRating);
+    	//System.out.println(rating);
+    	//System.out.println(newRating);
+    	//System.out.println(personID);
     	
     	String update = "UPDATE Person SET overall_rating=?, rating_count=? WHERE personid=?";
     	try (Connection conn = DriverManager.getConnection(Util.Constant.Url, Util.Constant.DBUserName, Util.Constant.DBPassword);
@@ -61,4 +80,5 @@ public class Helper {
         }
         catch (SQLException ex) {System.out.println("SQLException: " + ex.getMessage());}
 	}
+	
 }

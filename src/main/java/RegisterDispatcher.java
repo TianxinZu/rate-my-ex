@@ -81,7 +81,26 @@ public class RegisterDispatcher extends HttpServlet {
 	        Reader reader = new InputStreamReader(is);
 	        //Running the script
 	        sr.runScript(reader);
-	        
+	        con.close();
+    	}
+    	catch (SQLException e) {System.out.println(e.getMessage());}
+        
+        try {
+        	if(Util.Helper.flag) {
+        		System.out.println("Init");
+    		//Registering the Driver
+//	    	DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+	        //Getting the connection
+	        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306", Util.Constant.DBUserName, Util.Constant.DBPassword);
+	        //Initialize the script runner
+	        ScriptRunner sr = new ScriptRunner(con);
+	        //Creating a reader object
+	        ServletContext servletContext = getServletContext();
+	        InputStream is = servletContext.getResourceAsStream("origin.sql");
+	        Reader reader = new InputStreamReader(is);
+	        //Running the script
+	        sr.runScript(reader);
+        	}
     	}
     	catch (SQLException e) {System.out.println(e.getMessage());}
         

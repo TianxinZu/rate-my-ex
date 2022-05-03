@@ -77,13 +77,14 @@ a.navbar-link:visited {
 
 #search-text {
     text-align: center;
+    font-size: 20px;
+    font-family: 'Tapestry', cursive;
 }
 
 #search-text-box {
     display: flex;
     width: 40%;
-    margin: 0 auto;
-    
+    margin: 0 auto;   
 }
 
 #text-box {

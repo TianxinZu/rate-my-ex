@@ -44,7 +44,7 @@
         </div>
         <div id="navbar-right">
             <a href="index.jsp" class="navbar-link">Home</a>
-			<a href="login.jsp" class="navbar-link">login/register</a>
+			<a href="login.jsp" class="navbar-link">Login/Register</a>
         </div>
     </div>
     <% 

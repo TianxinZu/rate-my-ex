@@ -110,7 +110,7 @@ public class ContactDispatcher extends HttpServlet {
 			}
 			ps.close();
     	}
-    	catch (Exception e) {e.printStackTrace();};
+    	catch (Exception e) {e.printStackTrace();}
     	return name_to_messages;
     }
 

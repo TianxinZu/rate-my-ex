@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bangers">
     <title>RATE MY EX</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 <body>
 	<%
@@ -19,6 +20,7 @@
 	    		if (cookie.getName().equals("username")) username = cookie.getValue().replace("=", " "); 
 	    	}
 	    }
+	    String ID = request.getParameter("userID");
 	%>
     <div id="navbar">
         <div id="navbar-left">
@@ -42,11 +44,30 @@
         </div>
     </div>
     <div id="chat-name">
-    	<p>NAME</p>
+    	<p></p><%=ID%>
     </div>
     <div id="chat-history">
     	<!-- insert chat -->
+    	<div id="my-chat">
+    		<p>Hi! Nice to meet you! Good Morning! How's it going? What's up?</p>
+    	</div>
+    	<div id="your-chat">
+    		<p>Hello! How are you doing? Good Evening! It's great to see you! Long-time no see!</p>
+    	</div>
     </div>
+    <script>
+    	setInterval("getMessage()",1000);
+    	function getMessage(){
+    		$.ajax({
+                url: ,
+                type: ,
+                data: ,
+                success:function (args) {
+                	
+                }
+            })
+    	}
+    </script>
     <div id="chat">
     	<form action="ChatServlet" method="GET">
     		<div id="chat-text-box">

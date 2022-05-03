@@ -96,7 +96,6 @@ public class SearchDispatcher extends HttpServlet {
 		// store search criterias, all should be string
 		HttpSession session = request.getSession(); // if we need to getSession or not
 		session.setAttribute("searchText", searchText);
-		
 		request.getRequestDispatcher("/results.jsp").forward(request, response);
     }
 

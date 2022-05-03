@@ -43,11 +43,11 @@ public class ContactDispatcher extends HttpServlet {
     	}
     	Map<Integer, String> userid_to_username = getUsers();
     	Map<String, ArrayList<Message>> name_to_messages = getMessages(userID, userid_to_username);
-    	System.out.println(name_to_messages.size());
-    	for (Map.Entry<String, ArrayList<Message>> entry : name_to_messages.entrySet())
-    	{
-    		System.out.println(entry.getKey());
-    	}
+//    	System.out.println(name_to_messages.size());
+//    	for (Map.Entry<String, ArrayList<Message>> entry : name_to_messages.entrySet())
+//    	{
+//    		System.out.println(entry.getValue());
+//    	}
     	response.setContentType("text/html");
     	Timestamp createdTime = new Timestamp(System.currentTimeMillis());
 //    	Message message = new Message("Hello World", 1, 2, createdTime);
@@ -55,7 +55,8 @@ public class ContactDispatcher extends HttpServlet {
 //    	System.out.println(timestamp.getClass().getName());
 //    	System.out.println(Util.Constant.dateFormat.format(createdTime));
     	request.setAttribute("contacts", name_to_messages.keySet());
-    	response.sendRedirect("contact.jsp");
+    	RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/contacts.jsp");
+    	dispatcher.forward(request, response);
     }
     
     public Map<Integer, String> getUsers()
@@ -104,7 +105,6 @@ public class ContactDispatcher extends HttpServlet {
 				String otherUserName = userid_to_username.get(otherUserID);
 				if (otherUserName != null)
 				{
-					System.out.println("adasdaf");
 					if (!name_to_messages.containsKey(otherUserName)) name_to_messages.put(otherUserName, new ArrayList<Message>());
 					name_to_messages.get(otherUserName).add(message);
 				}

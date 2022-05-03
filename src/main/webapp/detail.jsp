@@ -59,6 +59,9 @@
 		catch(Exception e) {
 			e.printStackTrace();
 		}
+		
+		session = request.getSession(); 
+		session.setAttribute("personid", myPerson.personid);
 	%>
     <div id="navbar">
         <div id="navbar-left">

@@ -33,6 +33,7 @@ public class LoginDispatcher extends HttpServlet {
     	String password = request.getParameter("password");
     	String error = "";
     	String name = "";
+    	Integer userid = 0;
     	
     	if (email == null || email.equals("")) error += "<p>Missing email address. ";
     	else if (!Pattern.matches(Util.Constant.emailPattern, email)) error += "<p>Invalid email address. ";
@@ -69,7 +70,7 @@ public class LoginDispatcher extends HttpServlet {
     	}
     	catch (SQLException e) {System.out.println(e.getMessage());}
     	
-    	String check = "SELECT username, userpassword FROM Username WHERE email = ?";
+    	String check = "SELECT username, userpassword, userid FROM Username WHERE email = ?";
     	
     	try (Connection conn = DriverManager.getConnection(Util.Constant.Url, Util.Constant.DBUserName, Util.Constant.DBPassword);
       	       PreparedStatement ps = conn.prepareStatement(check);) 
@@ -78,6 +79,7 @@ public class LoginDispatcher extends HttpServlet {
          	ResultSet rs = ps.executeQuery();
          	if (rs.next()) {
          		name = rs.getString("username");
+         		userid = rs.getInt("userid");
          		if (!password.equals(rs.getString("userpassword"))) 
          		{
          			error = "<p>Password doesn't match. Please enter again.</p>";
@@ -100,6 +102,10 @@ public class LoginDispatcher extends HttpServlet {
     	Cookie cookie = new Cookie("username", name);
     	cookie.setMaxAge(3600);
     	response.addCookie(cookie);
+    	
+    	String userID = userid.toString();
+    	Cookie mycookie = new Cookie("userid", userID);
+    	response.addCookie(mycookie);
     	//request.getRequestDispatcher("index.jsp").forward(request, response);
     	response.sendRedirect("index.jsp");
     }

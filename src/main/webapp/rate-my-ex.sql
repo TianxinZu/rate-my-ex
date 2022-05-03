@@ -3,9 +3,10 @@ USE ratemyex;
 
 CREATE TABLE Username (
 	email VARCHAR(100) NOT NULL,
+	userid INT(100) NOT NULL AUTO_INCREMENT,
     username VARCHAR(100) NOT NULL,
     userpassword VARCHAR(100) NOT NULL,
-    PRIMARY KEY (email)
+    PRIMARY KEY (userid)
 );
 
 CREATE TABLE Person (
@@ -18,7 +19,7 @@ CREATE TABLE Person (
 );
 
 CREATE TABLE Post (
-	postid INT(100) NOT NULL,
+	postid INT(100) NOT NULL AUTO_INCREMENT,
 	personid INT(100) NOT NULL,
 	userid INT(100) NOT NULL,
 	description VARCHAR(100) NOT NULL,

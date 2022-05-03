@@ -43,6 +43,7 @@ public class RegisterDispatcher extends HttpServlet {
         String confirmedPassword = request.getParameter("confirmed_password");
         String[] terms = request.getParameterValues("terms");
         String error = "";
+        Integer userid = 0;
         
         if (email == null || email.equals("")) error += "<p>Missing email address. ";
         else if (!Pattern.matches(Util.Constant.emailPattern, email)) error += "<p>Invalid email address. ";
@@ -85,7 +86,7 @@ public class RegisterDispatcher extends HttpServlet {
     	catch (SQLException e) {System.out.println(e.getMessage());}
         
         String check = "SELECT email FROM Username WHERE email = ?";
-        String insert = "INSERT INTO Username VALUES (?, ?, ?)";
+        String insert = "INSERT INTO Username (email, username, userpassword) VALUES (?, ?, ?)";
         
         try (Connection conn = DriverManager.getConnection(Util.Constant.Url, Util.Constant.DBUserName, Util.Constant.DBPassword);
      	       PreparedStatement ps = conn.prepareStatement(check);) 
@@ -99,6 +100,7 @@ public class RegisterDispatcher extends HttpServlet {
     			request.getRequestDispatcher("login.jsp").include(request, response);
     			return;
         	}
+        	
         }
         catch (SQLException ex) {System.out.println("SQLException: " + ex.getMessage());}
         
@@ -115,9 +117,27 @@ public class RegisterDispatcher extends HttpServlet {
         	System.out.println ("SQLException: " + ex.getMessage());
         }
         
+        String getID = "SELECT userid FROM Username WHERE email = ?";
+        try (Connection conn = DriverManager.getConnection(Util.Constant.Url, Util.Constant.DBUserName, Util.Constant.DBPassword);
+     	       PreparedStatement ps = conn.prepareStatement(getID);) 
+        {
+        	ps.setString(1, email);
+        	ResultSet rs = ps.executeQuery();
+        	rs.next();
+        	userid = rs.getInt("userid");
+        } 
+        catch (SQLException ex) 
+        {
+        	System.out.println ("SQLException: " + ex.getMessage());
+        }
+        
         Cookie cookie = new Cookie("username",name);
 		cookie.setMaxAge(3600);
 		response.addCookie(cookie);
+		
+    	String userID = userid.toString();
+    	Cookie mycookie = new Cookie("userid", userID);
+    	response.addCookie(mycookie);
 		//request.getRequestDispatcher("index.jsp").forward(request, response);
 		response.sendRedirect("index.jsp");
     }

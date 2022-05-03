@@ -28,6 +28,9 @@
             	}
             %>
         </div>
+        <div id="navbar-middle">
+        	<a href="ContactDispatcher" class="navbar-link">Chat</a>
+        </div>
         <div id="navbar-right">
             <a href="index.jsp" class="navbar-link">Home</a>
             <%

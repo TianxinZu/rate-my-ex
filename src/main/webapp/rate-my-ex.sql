@@ -22,7 +22,7 @@ CREATE TABLE Post (
 	postid INT(100) NOT NULL AUTO_INCREMENT,
 	personid INT(100) NOT NULL,
 	userid INT(100) NOT NULL,
-	description VARCHAR(100) NOT NULL,
+	description VARCHAR(2000) NOT NULL,
 	rating DOUBLE(100, 2) NOT NULL,
 	PRIMARY KEY (postid)
 );

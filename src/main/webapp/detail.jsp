@@ -143,10 +143,12 @@
 		</div>
 	</div>
 	<div id="comments">
-			<p>Comments: 
+			<p>Comments:</p>
 	             <% 
              		for (int i=0; i < comments.size(); i++){%>
-             			<a href="chat.jsp?userID=<%= userIDs.get(i)%>"><%= userIDs.get(i) %></a>
+             			<form action="ChatDispatcher" method="GET">
+        				<input type="submit" name="otherUserID" value=<%=userIDs.get(i)%>>
+        				</form>
               			<p><%= comments.get(i) %></p>
               			<br>
              		<% } %>

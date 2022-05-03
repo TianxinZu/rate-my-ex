@@ -20,7 +20,7 @@ import javax.servlet.http.Cookie;
 /**
  * Servlet implementation class LoginDispatcher
  */
-@WebServlet("/ContactDispatcher")
+@WebServlet("/ChatDispatcher")
 public class ChatDispatcher extends HttpServlet {
     @Serial
     private static final long serialVersionUID = 1L;

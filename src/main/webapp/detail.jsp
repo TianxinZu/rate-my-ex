@@ -86,8 +86,6 @@
             %>
         </div>
       </div>
-	
-</div>
 
 	    <div id="search">
         <div id="search-text">
@@ -103,8 +101,8 @@
     </div>
 	
 	<div id="all-details">
+		<div id="details">
 	    <h1><%=myPerson.name%></h1>
-	    <div id="details">
 	        <div id="text">
 	            <p>Gender: 
 	            <%= myPerson.gender %></p >
@@ -118,18 +116,9 @@
              		<% if(rating - (int)rating > 0) {%>
               			<i class="fa fa-star-half-o"></i>
              		<% } %></p >
-             	<p>Comments: 
-	             <% 
-             		for (int i=0; i < comments.size(); i++){%>
-             			<a href="chat.jsp?userID=<%= userIDs.get(i)%>"><%= userIDs.get(i) %></a>
-              			<p><%= comments.get(i) %></p>
-              			<br>
-             		<% } %>
         	</div>
     	</div>
-	</div>
-	
-	<div id="add">
+    	<div id="add">
 		<form action="AddDispatcher" method="GET">
     		<h1 class="add-header">Add a comment</h1>
     		<p>Comment</p>
@@ -141,6 +130,16 @@
     		<br/><br/>
     		<button type="submit" name="submit" class="regbutton"><i class="fa fa-sign-in"></i>    Submit</button>
     	</form>
+		</div>
+	</div>
+	<div id="comments">
+			<p>Comments: 
+	             <% 
+             		for (int i=0; i < comments.size(); i++){%>
+             			<a href="chat.jsp?userID=<%= userIDs.get(i)%>"><%= userIDs.get(i) %></a>
+              			<p><%= comments.get(i) %></p>
+              			<br>
+             		<% } %>
 	</div>
 </body>
 </html>

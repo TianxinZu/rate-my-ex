@@ -79,3 +79,25 @@ a.navbar-link:visited {
     padding: 10px 10px;
     width: 100%;
 }
+
+#all-details {
+	padding-left: 500px;
+	padding-right: 400px;
+}
+
+#details {
+	font-size: 30px;
+	display: inline;
+	float: left;
+}
+
+#add {
+	display: inline;
+	float: right;
+}
+
+#comments {
+	margin-top: 25rem;
+	padding-left: 500px;
+	padding-right: 400px;
+}

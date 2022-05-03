@@ -54,7 +54,7 @@ public class ContactDispatcher extends HttpServlet {
 //    	message.insertIntoDatabase();
 //    	System.out.println(timestamp.getClass().getName());
 //    	System.out.println(Util.Constant.dateFormat.format(createdTime));
-    	request.setAttribute("name_to_messages", name_to_messages);
+    	request.setAttribute("contacts", name_to_messages.keySet());
     	response.sendRedirect("contact.jsp");
     }
     

@@ -41,9 +41,16 @@ a#logo:visited {
 	vertical-align: super;
 }
 
+#navbar-middle {
+    text-align: center;
+    padding: 1rem;
+    font-family: 'Montserrat', sans-serif;
+}
+
 #navbar-right {
     margin-left: auto;
     padding: 1rem;
+    font-family: 'Montserrat', sans-serif;
 }
 
 a.navbar-link:link {
@@ -60,8 +67,11 @@ a.navbar-link:visited {
 }
 
 .navbar-link {
-	margin: 10px;
-	font-size: 15px;
+	background-color: #E0E0E0; 
+    font-weight: bold; 
+    border-radius: 20px;
+    padding: 5px 20px 5px 20px; 
+    
 }
 
 #search {

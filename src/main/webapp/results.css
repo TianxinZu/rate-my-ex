@@ -1,5 +1,14 @@
 @charset "ISO-8859-1";
 
+body {
+    font-size: 13px;
+    margin: 0;
+    background-image: url("webpagebackground.jpeg");
+}
+h1 {
+	margin-left: 3rem;
+	font-family: 'Montserrat', sans-serif;
+}
 #navbar {
 	display: flex;
     align-items: center;
@@ -40,6 +49,7 @@ a#logo:visited {
 #navbar-right {
     margin-left: auto;
     padding: 1rem;
+    font-family: 'Montserrat', sans-serif;
 }
 
 a.navbar-link:link {
@@ -56,7 +66,10 @@ a.navbar-link:visited {
 }
 
 .navbar-link {
-	margin: 10px;
+	background-color: #E0E0E0; 
+    font-weight: bold; 
+    border-radius: 20px;
+    padding: 5px 20px 5px 20px; 
 }
 
 #search {
@@ -66,6 +79,9 @@ a.navbar-link:visited {
 
 #search-text {
     text-align: center;
+    font-size: 20px;
+    font-family: 'Tapestry', cursive;
+    color: black;
 }
 
 #search-text-box {
@@ -78,4 +94,8 @@ a.navbar-link:visited {
     box-sizing: border-box;
     padding: 10px 10px;
     width: 100%;
+}
+a, a:visited {
+    color: inherit;
+    text-decoration: none;
 }

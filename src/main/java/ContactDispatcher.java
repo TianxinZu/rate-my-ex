@@ -68,9 +68,10 @@ public class ContactDispatcher extends HttpServlet {
     	{
     		Class.forName("com.mysql.jdbc.Driver");
 			Connection connection = DriverManager.getConnection(Constant.Url, Constant.DBUserName, Constant.DBPassword);
-			String sql = "SELECT DISTINCT u.username FROM Username u JOIN Message m on u.userID != ? AND (u.userid = m.senderID or u.userid = m.receiverID)";
+			String sql = "SELECT DISTINCT u.username FROM Username u INNER JOIN Message m ON u.userid = m.senderID AND m.receiverID = ? OR u.userid = m.receiverID AND m.senderID = ?";
 			PreparedStatement ps = connection.prepareStatement(sql);
 			ps.setInt(1, userID);
+			ps.setInt(2, userID);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next())
 			{

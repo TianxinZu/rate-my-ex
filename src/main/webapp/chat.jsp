@@ -52,35 +52,11 @@
     	<p></p><%=otherUserName%>
     </div>
     <div id="chat-history">
-    	<%
-    		for(int i=0; i<messages.size(); i++){
-    			%>
-    				<div id="time">
-    					<p><%=messages.get(i).get(1)%></p>
-    				</div>
-    			<%
-    			if((boolean)(messages.get(i).get(2))){
-    				%>
-    				<div id="my-chat">
-    					<p><%=messages.get(i).get(0)%></p>
-    				</div>
-    				<%
-    			}
-    			else{
-    				%>
-    				<div id="your-chat">
-    					<p><%=messages.get(i).get(0)%></p>
-    				</div>
-    				<%
-    			}
-    		}
-    	%>
     </div>
     <div id="chat">
-    	<form action="insert-chat.jsp" method="POST" id="input-box">
+    	<form action="ChatDispatcher" method="POST" id="input-box">
     		<div id="chat-text-box">
     			<input type="text" name="text" id="chat-box" placeholder="Type something ...">
-    			<button id="submitForm" value="send">
     			<input type="hidden" name="otherUserName id="otherUserName" value=<%=otherUserName%>>
     			<input type="hidden" name="otherUserID" id="otherUserID" value=<%=otherUserID%>>
     		</div>
@@ -105,7 +81,7 @@
 			}
 			xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 			xhr.send("otherUserName="+otherUserName+"&otherUserID="+otherUserID);
-		}, 500);
+		}, 1000);
 	</script> 
 </body>
 </html>

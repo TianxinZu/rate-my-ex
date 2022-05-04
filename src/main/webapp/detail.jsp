@@ -147,7 +147,7 @@
 	             <% 
              		for (int i=0; i < comments.size(); i++){%>
              			<form action="ChatDispatcher" method="GET">
-        				<input type="submit" name="otherUserID" value=<%=userIDs.get(i)%>>
+        				<input type="submit" name="otherUserName" value=<%=userIDs.get(i)%>>
         				</form>
               			<p><%= comments.get(i) %></p>
               			<br>

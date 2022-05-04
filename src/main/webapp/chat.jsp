@@ -52,6 +52,11 @@
     <div id="chat-history">
     	<%
     		for(int i=0; i<messages.size(); i++){
+    			%>
+    				<div id="time">
+    					<p><%=messages.get(i).get(1)%></p>
+    				</div>
+    			<%
     			if((boolean)(messages.get(i).get(2))){
     				%>
     				<div id="my-chat">
@@ -86,6 +91,7 @@
     	<form action="ChatDispatcher" method="GET">
     		<div id="chat-text-box">
     			<input type="text" name="text" id="chat-box" placeholder="Type something ...">
+    			<input type="submit" value="send">
     			<input type="hidden" name="otherUserName" value=<%=otherUserName%>>
     		</div>
     	</form>

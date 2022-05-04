@@ -145,7 +145,9 @@ public class ChatDispatcher extends HttpServlet {
     	response.setContentType("text/html");
     	String text = request.getParameter("text");
     	String otherUserName = request.getParameter("otherUserName");
-    	int otherUserID = getUserID(otherUserName);
+    	String otherUserIDString = request.getParameter("otherUserID");
+    	Integer otherUserID = otherUserIDString == null ? getUserID(otherUserName) : Integer.valueOf(otherUserIDString);
+//    	int otherUserID = getUserID(otherUserName);
     	Timestamp createdTime = new Timestamp(System.currentTimeMillis());
     	if (text != null && !text.isEmpty())
     	{
@@ -154,8 +156,10 @@ public class ChatDispatcher extends HttpServlet {
     	}
     	ArrayList<ArrayList<Object>> messages = getMessages(userID, otherUserID);
     	request.setAttribute("otherUserName", otherUserName);
+    	request.setAttribute("otherUserID", otherUserID);
     	request.setAttribute("messages", messages);
     	RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/chat.jsp");
     	dispatcher.forward(request, response);
+//    	response.sendRedirect("test.php");
     }
 }

@@ -20,7 +20,7 @@
 	    		if (cookie.getName().equals("username")) username = cookie.getValue().replace("=", " "); 
 	    	}
 	    }
-	    ArrayList<String> contacts = (ArrayList<String>)request.getAttribute("contacts");
+	    ArrayList<String> contacts = (ArrayList<String>) request.getAttribute("contacts");
 	%>
     <div id="navbar">
         <div id="navbar-left">

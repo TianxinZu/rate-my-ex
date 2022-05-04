@@ -54,9 +54,11 @@ public class ContactDispatcher extends HttpServlet {
 //    	message.insertIntoDatabase();
 //    	System.out.println(timestamp.getClass().getName());
 //    	System.out.println(Util.Constant.dateFormat.format(createdTime));
+    	
     	request.setAttribute("contacts", getContacts(userID));
     	RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/contacts.jsp");
     	dispatcher.forward(request, response);
+//    	response.sendRedirect("test.php");
     }
     
     public ArrayList<String> getContacts(int userID)

@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bangers">
     <title>RATE MY EX</title>
     <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="jquery-3.6.0.min.js"></script>
 </head>
 <body>
 	<%
@@ -22,7 +23,8 @@
 	    		if (cookie.getName().equals("username")) username = cookie.getValue().replace("=", " "); 
 	    	}
 	    }
-	    String otherUserName = request.getParameter("otherUserName");
+	    String otherUserName = (String) request.getAttribute("otherUserName");
+	    Integer otherUserID = (Integer) request.getAttribute("otherUserID");
 	    ArrayList<ArrayList<Object>> messages = (ArrayList<ArrayList<Object>>)request.getAttribute("messages");
 	%>
     <div id="navbar">
@@ -74,32 +76,36 @@
     		}
     	%>
     </div>
-    <script>
-    	setInterval("getMessage()",1000);
-    	function getMessage(){
-    		$.ajax({
-                url: ,
-                type: ,
-                data: ,
-                success:function (args) {
-                	
-                }
-            })
-    	}
-    </script>
     <div id="chat">
-    	<form action="ChatDispatcher" method="POST">
+    	<form action="insert-chat.jsp" method="POST" id="input-box">
     		<div id="chat-text-box">
     			<input type="text" name="text" id="chat-box" placeholder="Type something ...">
-    			<input type="submit" value="send">
-    			<input type="hidden" name="otherUserName" value=<%=otherUserName%>>
+    			<button id="submitForm" value="send">
+    			<input type="hidden" name="otherUserName id="otherUserName" value=<%=otherUserName%>>
+    			<input type="hidden" name="otherUserID" id="otherUserID" value=<%=otherUserID%>>
     		</div>
     	</form>
     </div>
+    <script>
+		const chatHistory = document.querySelector("#chat-history");
+		const form = document.querySelector("#input-box");
+		const otherUserName = "<%=otherUserName%>";
+		const otherUserID = "<%=otherUserID%>";
+		console.log(otherUserID);
+		setInterval(() => {
+			let xhr = new XMLHttpRequest();
+			xhr.open("POST", "get-chat.jsp", true);
+			xhr.onload = ()=> {
+				if (xhr.readyState === XMLHttpRequest.DONE) {
+					if (xhr.status === 200) {
+						let data = xhr.response;
+						chatHistory.innerHTML = data;
+					}
+				}
+			}
+			xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			xhr.send("otherUserName="+otherUserName+"&otherUserID="+otherUserID);
+		}, 500);
+	</script> 
 </body>
 </html>
-<script>
-if ( window.history.replaceState ) {
-  window.history.replaceState( null, null, window.location.href );
-}
-</script> 

@@ -23,7 +23,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Helper {
-	public static List<Person> myList;
+	public static List<Person> myList = new ArrayList<Person>();
 	public static boolean flag = true;
 	
 	public Helper() {

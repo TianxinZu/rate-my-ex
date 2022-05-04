@@ -100,6 +100,7 @@ public class RegisterDispatcher extends HttpServlet {
 	        Reader reader = new InputStreamReader(is);
 	        //Running the script
 	        sr.runScript(reader);
+	        Util.Helper.flag = false;
         	}
     	}
     	catch (SQLException e) {System.out.println(e.getMessage());}

@@ -13,9 +13,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="index.css" rel="stylesheet" type="text/css">
+    <link href="results.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bangers">
+    <link href="https://fonts.googleapis.com/css2?family=Tapestry&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300&display=swap" rel="stylesheet">
     <title>Search</title>
     
 </head>
@@ -59,7 +61,7 @@
             		%><a href="LogoutDispatcher" class="navbar-link">logout</a><%
             	}
             	else {
-            		%><a href="login.jsp" class="navbar-link">login/register</a><%
+            		%><a href="login.jsp" class="navbar-link">Login/Register</a><%
             	}
             %>
         </div>
@@ -112,8 +114,7 @@
 		     <hr>
 	     <% } %>
 	</div>
-	
-	<a href="write.jsp">Didn't find the one you are looking for?</a>
+	<a href="write.jsp" style=" position:relative; top: 3rem; margin-left: 3rem; font-family: 'Tapestry', cursive;background-color: black; color: white; font-weight: bold; border-radius: 20px;padding: 5px 20px 5px 20px;  ">Didn't find the one you are looking for?</a>
 
 </body>
 </html>

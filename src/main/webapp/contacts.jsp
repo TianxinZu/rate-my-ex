@@ -11,6 +11,7 @@
     <title>Contacts</title>
 </head>
 <body>
+<%@ page import ="java.util.ArrayList"%>
 	<%
 		String username = "";
 		Cookie cookies[] = request.getCookies();
@@ -19,7 +20,7 @@
 	    		if (cookie.getName().equals("username")) username = cookie.getValue().replace("=", " "); 
 	    	}
 	    }
-	    String[] contacts = (String[])request.getAttribute("contacts");
+	    ArrayList<String> contacts = (ArrayList<String>)request.getAttribute("contacts");
 	%>
     <div id="navbar">
         <div id="navbar-left">
@@ -46,10 +47,10 @@
     <div id="contacts">
     	<%
     		if(contacts != null){
-    			for (int i=0; i<contacts.length ; i++){
+    			for (int i=0; i<contacts.size(); i++){
         			%>
         			<form action="ChatDispatcher" method="GET">
-        			<input type="submit" name="otherUserID" value=<%=contacts[i]%>><%=contacts[i]%>
+        				<input type="submit" name="otherUserName" value=<%=contacts.get(i)%>><%=contacts.get(i)%>
         			</form>
         			<%
         		}

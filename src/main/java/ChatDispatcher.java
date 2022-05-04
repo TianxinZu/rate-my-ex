@@ -48,19 +48,40 @@ public class ChatDispatcher extends HttpServlet {
 //    	}
     	response.setContentType("text/html");
     	String text = request.getParameter("text");
-    	int otherUserID = Integer.valueOf(request.getParameter("otherUserID"));
+    	String otherUserName = request.getParameter("otherUserName");
+    	int otherUserID = getUserID(otherUserName);
     	Timestamp createdTime = new Timestamp(System.currentTimeMillis());
     	if (text != null && !text.isEmpty())
     	{
 	    	Message message = new Message(text, userID, otherUserID, createdTime);
 	    	message.insertIntoDatabase();
     	}
-//    	System.out.println(timestamp.getClass().getName());
-//    	System.out.println(Util.Constant.dateFormat.format(createdTime));
     	ArrayList<ArrayList<Object>> messages = getMessages(userID, otherUserID);
+    	request.setAttribute("otherUserName", otherUserName);
     	request.setAttribute("messages", messages);
     	RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/chat.jsp");
     	dispatcher.forward(request, response);
+    }
+    
+    public int getUserID(String username)
+    {
+    	int userID = -1;
+    	try
+    	{
+    		Class.forName("com.mysql.jdbc.Driver");
+			Connection connection = DriverManager.getConnection(Constant.Url, Constant.DBUserName, Constant.DBPassword);
+			String sql = "SELECT userid FROM Username WHERE username = ?";
+			PreparedStatement ps = connection.prepareStatement(sql);
+			ps.setString(1, username);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next())
+			{
+				userID = rs.getInt("userid");
+			}
+			ps.close();
+    	}
+    	catch (Exception e) {e.printStackTrace();}
+    	return userID;
     }
     
     public ArrayList<ArrayList<Object>> getMessages(int userID, int otherUserID)
@@ -70,7 +91,7 @@ public class ChatDispatcher extends HttpServlet {
     	{
     		Class.forName("com.mysql.jdbc.Driver");
 			Connection connection = DriverManager.getConnection(Constant.Url, Constant.DBUserName, Constant.DBPassword);
-			String sql = "SELECT * FROM Message WHERE (senderID = ? OR receiverID = ?) AND (senderID = ? OR receiverID = ?)";
+			String sql = "SELECT * FROM Message WHERE (senderID = ? OR receiverID = ?) AND (senderID = ? OR receiverID = ?) ORDER BY createdTime";
 			PreparedStatement ps = connection.prepareStatement(sql);
 			ps.setInt(1, userID);
 			ps.setInt(2, userID);

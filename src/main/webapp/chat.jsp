@@ -22,7 +22,7 @@
 	    		if (cookie.getName().equals("username")) username = cookie.getValue().replace("=", " "); 
 	    	}
 	    }
-	    String ID = request.getParameter("otherUserID");
+	    String otherUserName = request.getParameter("otherUserName");
 	    ArrayList<ArrayList<Object>> messages = (ArrayList<ArrayList<Object>>)request.getAttribute("messages");
 	%>
     <div id="navbar">
@@ -47,15 +47,9 @@
         </div>
     </div>
     <div id="chat-name">
-    	<p></p><%=ID%>
+    	<p></p><%=otherUserName%>
     </div>
     <div id="chat-history">
-    	<div id="my-chat">
-    		<p>Hi! Nice to meet you! Good Morning! How's it going? What's up?</p>
-    	</div>
-    	<div id="your-chat">
-    		<p>Hello! How are you doing? Good Evening! It's great to see you! Long-time no see!</p>
-    	</div>
     	<%
     		for(int i=0; i<messages.size(); i++){
     			if((boolean)(messages.get(i).get(2))){
@@ -92,7 +86,7 @@
     	<form action="ChatDispatcher" method="GET">
     		<div id="chat-text-box">
     			<input type="text" name="text" id="chat-box" placeholder="Type something ...">
-    			<input type="hidden" name="otherUserID" value=<%=ID%>>
+    			<input type="hidden" name="otherUserName" value=<%=otherUserName%>>
     		</div>
     	</form>
     </div>

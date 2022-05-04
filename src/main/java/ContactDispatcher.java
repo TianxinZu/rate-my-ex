@@ -41,22 +41,44 @@ public class ContactDispatcher extends HttpServlet {
     			if (cookie.getName().equals("userid")) userID = Integer.valueOf(cookie.getValue());
     		}
     	}
-    	Map<Integer, String> userid_to_username = getUsers();
-    	Map<String, ArrayList<Message>> name_to_messages = getMessages(userID, userid_to_username);
+//    	Map<Integer, String> userid_to_username = getUsers();
+//    	Map<String, ArrayList<Message>> name_to_messages = getMessages(userID, userid_to_username);
 //    	System.out.println(name_to_messages.size());
 //    	for (Map.Entry<String, ArrayList<Message>> entry : name_to_messages.entrySet())
 //    	{
 //    		System.out.println(entry.getValue());
 //    	}
     	response.setContentType("text/html");
-    	Timestamp createdTime = new Timestamp(System.currentTimeMillis());
+//    	Timestamp createdTime = new Timestamp(System.currentTimeMillis());
 //    	Message message = new Message("Hello World", 1, 2, createdTime);
 //    	message.insertIntoDatabase();
 //    	System.out.println(timestamp.getClass().getName());
 //    	System.out.println(Util.Constant.dateFormat.format(createdTime));
-    	request.setAttribute("contacts", name_to_messages.keySet());
+    	request.setAttribute("contacts", getContacts(userID));
     	RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/contacts.jsp");
     	dispatcher.forward(request, response);
+    }
+    
+    public ArrayList<String> getContacts(int userID)
+    {
+    	ArrayList<String> contacts = new ArrayList<String>();
+    	try
+    	{
+    		Class.forName("com.mysql.jdbc.Driver");
+			Connection connection = DriverManager.getConnection(Constant.Url, Constant.DBUserName, Constant.DBPassword);
+			String sql = "SELECT DISTINCT u.username FROM Username u JOIN Message m on u.userID != ? AND (u.userid = m.senderID or u.userid = m.receiverID)";
+			PreparedStatement ps = connection.prepareStatement(sql);
+			ps.setInt(1, userID);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next())
+			{
+				String username = rs.getString("username");
+				contacts.add(username);
+			}
+			ps.close();
+    	}
+    	catch (Exception e) {e.printStackTrace();}
+    	return contacts;
     }
     
     public Map<Integer, String> getUsers()

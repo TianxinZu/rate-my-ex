@@ -128,6 +128,34 @@ public class ChatDispatcher extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        doGet(request, response);
+    	int userID = -1;
+    	Cookie[] cookies = request.getCookies();
+    	if (cookies != null)
+    	{
+    		for (Cookie cookie: cookies)
+    		{
+    			if (cookie.getName().equals("userid")) userID = Integer.valueOf(cookie.getValue());
+    		}
+    	}
+//    	Map<String, ArrayList<Message>> name_to_messages = getMessages(userID, userid_to_username);
+//    	for (Map.Entry<String, ArrayList<Message>> entry : name_to_messages.entrySet())
+//    	{
+//    		System.out.println(entry.getValue());
+//    	}
+    	response.setContentType("text/html");
+    	String text = request.getParameter("text");
+    	String otherUserName = request.getParameter("otherUserName");
+    	int otherUserID = getUserID(otherUserName);
+    	Timestamp createdTime = new Timestamp(System.currentTimeMillis());
+    	if (text != null && !text.isEmpty())
+    	{
+	    	Message message = new Message(text, userID, otherUserID, createdTime);
+	    	message.insertIntoDatabase();
+    	}
+    	ArrayList<ArrayList<Object>> messages = getMessages(userID, otherUserID);
+    	request.setAttribute("otherUserName", otherUserName);
+    	request.setAttribute("messages", messages);
+    	RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/chat.jsp");
+    	dispatcher.forward(request, response);
     }
 }

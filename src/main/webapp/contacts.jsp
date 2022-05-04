@@ -49,7 +49,7 @@
     		if(contacts != null){
     			for (int i=0; i<contacts.size(); i++){
         			%>
-        			<form action="ChatDispatcher" method="GET">
+        			<form action="ChatDispatcher" method="POST">
         				<input type="submit" name="otherUserName" value=<%=contacts.get(i)%>><%=contacts.get(i)%>
         			</form>
         			<%

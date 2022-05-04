@@ -88,7 +88,7 @@
     	}
     </script>
     <div id="chat">
-    	<form action="ChatDispatcher" method="GET">
+    	<form action="ChatDispatcher" method="POST">
     		<div id="chat-text-box">
     			<input type="text" name="text" id="chat-box" placeholder="Type something ...">
     			<input type="submit" value="send">
@@ -97,4 +97,9 @@
     	</form>
     </div>
 </body>
-</html> 
+</html>
+<script>
+if ( window.history.replaceState ) {
+  window.history.replaceState( null, null, window.location.href );
+}
+</script> 

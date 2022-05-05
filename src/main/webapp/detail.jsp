@@ -66,7 +66,6 @@
 			myresult2.next();
 			rating = myresult2.getDouble(1);
 			count = myresult2.getInt(2);
-			//System.out.println(rating);
 		}
 		catch(Exception e) {
 			e.printStackTrace();

@@ -42,7 +42,7 @@
 	    	catch (Exception e) {e.printStackTrace();}
 		}
 		else otherUserID = Integer.valueOf(otherUserIDString);
-		ArrayList<ArrayList<Object>> messages = new ArrayList<ArrayList<Object>>();
+		String output = "";
     	try
     	{
     		Class.forName("com.mysql.jdbc.Driver");
@@ -60,33 +60,13 @@
 				int senderID = rs.getInt("senderID");
 				Timestamp tempCreatedTime = rs.getTimestamp("createdTime");
 				String createdTime = Util.Constant.dateFormat.format(tempCreatedTime);
-				Boolean send = false;
-				if (senderID == userID)
-				{
-					send = true;
-				}
-				ArrayList<Object> message = new ArrayList<Object>();
-				message.add(text);
-				message.add(createdTime);
-				message.add(send);
-				messages.add(message);
+				output += "<div id='time'><p>" + createdTime + "</p></div>";
+				if (senderID == userID) output += "<div id='my-chat'><p>" + text + "</p></div>";
+				else output += "<div id='your-chat'><p>" + text + "</p></div>";
 			}
 			ps.close();
     	}
     	catch (Exception e) {e.printStackTrace();}
-    	String output = "";
-    	for (int i = 0; i < messages.size(); i++)
-    	{
-    		ArrayList<Object> message = messages.get(i);
-    		output += "<div id='time'><p>" + message.get(1) + "</p></div>";
-    		if ((boolean) message.get(2)) output += "<div id='my-chat'><p>" + message.get(0) + "</p></div>";
-    		else
-    		{
-    			output += "<div id='your-chat'><p>" + message.get(0) + "</p></div>";
-    		}
-    	}
-    	request.setAttribute("otherUserName", otherUserName);
-    	request.setAttribute("otherUserID", otherUserID);
     	out.println(output);
 	%>
 </body>

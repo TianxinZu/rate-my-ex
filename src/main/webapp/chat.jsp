@@ -25,7 +25,6 @@
 	    }
 	    String otherUserName = (String) request.getAttribute("otherUserName");
 	    Integer otherUserID = (Integer) request.getAttribute("otherUserID");
-	    ArrayList<ArrayList<Object>> messages = (ArrayList<ArrayList<Object>>)request.getAttribute("messages");
 	%>
     <div id="navbar">
         <div id="navbar-left">
@@ -35,6 +34,9 @@
             		out.print("<span id=\"welcome\">Hi, "+ username + "!</span>");
             	}
             %>
+        </div>
+        <div id="navbar-middle">
+        	<a href="ContactDispatcher" class="navbar-link">Chat</a>
         </div>
         <div id="navbar-right">
             <a href="index.jsp" class="navbar-link">Home</a>
@@ -57,7 +59,7 @@
     	<form action="ChatDispatcher" method="POST" id="input-box">
     		<div id="chat-text-box">
     			<input type="text" name="text" id="chat-box" placeholder="Type something ...">
-    			<input type="hidden" name="otherUserName id="otherUserName" value=<%=otherUserName%>>
+    			<input type="hidden" name="otherUserName" id="otherUserName" value=<%=otherUserName%>>
     			<input type="hidden" name="otherUserID" id="otherUserID" value=<%=otherUserID%>>
     		</div>
     	</form>
@@ -67,7 +69,6 @@
 		const form = document.querySelector("#input-box");
 		const otherUserName = "<%=otherUserName%>";
 		const otherUserID = "<%=otherUserID%>";
-		console.log(otherUserID);
 		setInterval(() => {
 			let xhr = new XMLHttpRequest();
 			xhr.open("POST", "get-chat.jsp", true);

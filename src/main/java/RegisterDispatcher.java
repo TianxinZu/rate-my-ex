@@ -36,6 +36,8 @@ public class RegisterDispatcher extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+    	
+    	// getting user information
     	response.setContentType("text/html");
         String email = request.getParameter("email");
         String name = request.getParameter("name");
@@ -45,6 +47,8 @@ public class RegisterDispatcher extends HttpServlet {
         String error = "";
         Integer userid = 0;
         
+        
+        // check for possible errors 
         if (email == null || email.equals("")) error += "<p>Missing email address. ";
         else if (!Pattern.matches(Util.Constant.emailPattern, email)) error += "<p>Invalid email address. ";
         else if (name == null || name.equals("")) error += "<p>Missing username. ";
@@ -54,6 +58,8 @@ public class RegisterDispatcher extends HttpServlet {
         else if (!password.equals(confirmedPassword)) error += "<p>Passwords do not match. ";
         else if (terms == null || terms.length == 0) error += "<p>Please check the term box. ";
         
+        
+        // return error message
         if (!error.equals("")) 
         {
         	error += "Please enter again.</p>";
@@ -62,15 +68,17 @@ public class RegisterDispatcher extends HttpServlet {
 			return;
         }
         
+        
+        // register driver
         try {
             Class.forName("com.mysql.jdbc.Driver");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
         
+        
+        // create database
         try {
-    		//Registering the Driver
-//	    	DriverManager.registerDriver(new com.mysql.jdbc.Driver());
 	        //Getting the connection
 	        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306", Util.Constant.DBUserName, Util.Constant.DBPassword);
 	        //Initialize the script runner
@@ -85,29 +93,36 @@ public class RegisterDispatcher extends HttpServlet {
     	}
     	catch (SQLException e) {System.out.println(e.getMessage());}
         
-        try {
-        	if(Util.Helper.flag) {
-        		System.out.println("Init");
-    		//Registering the Driver
-//	    	DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-	        //Getting the connection
-	        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306", Util.Constant.DBUserName, Util.Constant.DBPassword);
-	        //Initialize the script runner
-	        ScriptRunner sr = new ScriptRunner(con);
-	        //Creating a reader object
-	        ServletContext servletContext = getServletContext();
-	        InputStream is = servletContext.getResourceAsStream("origin.sql");
-	        Reader reader = new InputStreamReader(is);
-	        //Running the script
-	        sr.runScript(reader);
-	        Util.Helper.flag = false;
-        	}
-    	}
+        
+        // insert original data into database of database is empty now
+    	String checkdatabase = "SELECT * FROM Person";
+    	try (Connection conn = DriverManager.getConnection(Util.Constant.Url, Util.Constant.DBUserName, Util.Constant.DBPassword);
+    			Statement st = conn.createStatement();
+        		ResultSet rs = st.executeQuery(checkdatabase);) 
+        {
+    		if (!rs.next()) // database is empty at this moment
+    		{
+    			try
+    			{
+    				//Getting the connection
+    		        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306", Util.Constant.DBUserName, Util.Constant.DBPassword);
+    		        //Initialize the script runner
+    		        ScriptRunner sr = new ScriptRunner(con);
+    		        //Creating a reader object
+    		        ServletContext servletContext = getServletContext();
+    		        InputStream is = servletContext.getResourceAsStream("origin.sql");
+    		        Reader reader = new InputStreamReader(is);
+    		        //Running the script
+    		        sr.runScript(reader);
+    			}
+    			catch (SQLException e) {System.out.println(e.getMessage());}
+    		}
+        }
     	catch (SQLException e) {System.out.println(e.getMessage());}
+        	
         
+    	// check whether registered before
         String check = "SELECT email FROM Username WHERE email = ?";
-        String insert = "INSERT INTO Username (email, username, userpassword) VALUES (?, ?, ?)";
-        
         try (Connection conn = DriverManager.getConnection(Util.Constant.Url, Util.Constant.DBUserName, Util.Constant.DBPassword);
      	       PreparedStatement ps = conn.prepareStatement(check);) 
         {
@@ -124,6 +139,9 @@ public class RegisterDispatcher extends HttpServlet {
         }
         catch (SQLException ex) {System.out.println("SQLException: " + ex.getMessage());}
         
+        
+        // insert new user information into database
+        String insert = "INSERT INTO Username (email, username, userpassword) VALUES (?, ?, ?)";
         try (Connection conn = DriverManager.getConnection(Util.Constant.Url, Util.Constant.DBUserName, Util.Constant.DBPassword);
         	       PreparedStatement ps = conn.prepareStatement(insert);) 
         {
@@ -137,6 +155,8 @@ public class RegisterDispatcher extends HttpServlet {
         	System.out.println ("SQLException: " + ex.getMessage());
         }
         
+        
+        // get userid from database, used for chatting
         String getID = "SELECT userid FROM Username WHERE email = ?";
         try (Connection conn = DriverManager.getConnection(Util.Constant.Url, Util.Constant.DBUserName, Util.Constant.DBPassword);
      	       PreparedStatement ps = conn.prepareStatement(getID);) 
@@ -151,6 +171,8 @@ public class RegisterDispatcher extends HttpServlet {
         	System.out.println ("SQLException: " + ex.getMessage());
         }
         
+        
+        // send back username and userid by cookies
         Cookie cookie = new Cookie("username", name.replace(" ", "="));
 		cookie.setMaxAge(3600);
 		response.addCookie(cookie);
@@ -158,7 +180,7 @@ public class RegisterDispatcher extends HttpServlet {
     	String userID = userid.toString();
     	Cookie mycookie = new Cookie("userid", userID);
     	response.addCookie(mycookie);
-		//request.getRequestDispatcher("index.jsp").forward(request, response);
+
 		response.sendRedirect("index.jsp");
     }
 

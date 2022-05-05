@@ -20,6 +20,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import Util.*; 
@@ -52,22 +53,23 @@ public class SearchDispatcher extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // TODO
+    	
+    	
+    	// get user input
     	response.setContentType("text/html");
 		String searchText = request.getParameter("text-box");
+
 		
-		//System.out.println(searchText);
-		
-		
+		// register driver
 		try {
             Class.forName("com.mysql.jdbc.Driver");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
 		
+		
+		// create database if not exist
     	try {
-    		//Registering the Driver
-//	    	DriverManager.registerDriver(new com.mysql.jdbc.Driver());
 	        //Getting the connection
 	        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306", Util.Constant.DBUserName, Util.Constant.DBPassword);
 	        //Initialize the script runner
@@ -78,63 +80,55 @@ public class SearchDispatcher extends HttpServlet {
 	        Reader reader = new InputStreamReader(is);
 	        //Running the script
 	        sr.runScript(reader);
-	        
     	}
     	catch (SQLException e) {System.out.println(e.getMessage());}
 		
-		try {
-        	if(Util.Helper.flag) {
-        		System.out.println("Init");
-    		//Registering the Driver
-//	    	DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-	        //Getting the connection
-	        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306", Util.Constant.DBUserName, Util.Constant.DBPassword);
-	        //Initialize the script runner
-	        ScriptRunner sr = new ScriptRunner(con);
-	        //Creating a reader object
-	        ServletContext servletContext = getServletContext();
-	        InputStream is = servletContext.getResourceAsStream("origin.sql");
-	        Reader reader = new InputStreamReader(is);
-	        //Running the script
-	        sr.runScript(reader);
-	        Util.Helper.flag = false;
-        	}
-    	}
+    	
+    	// insert original data into database of database is empty now
+    	String checkdatabase = "SELECT * FROM Person";
+    	try (Connection conn = DriverManager.getConnection(Util.Constant.Url, Util.Constant.DBUserName, Util.Constant.DBPassword);
+    			Statement st = conn.createStatement();
+        		ResultSet rs = st.executeQuery(checkdatabase);) 
+        {
+    		if (!rs.next()) // database is empty at this moment
+    		{
+    			try
+    			{
+    				//Getting the connection
+    		        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306", Util.Constant.DBUserName, Util.Constant.DBPassword);
+    		        //Initialize the script runner
+    		        ScriptRunner sr = new ScriptRunner(con);
+    		        //Creating a reader object
+    		        ServletContext servletContext = getServletContext();
+    		        InputStream is = servletContext.getResourceAsStream("origin.sql");
+    		        Reader reader = new InputStreamReader(is);
+    		        //Running the script
+    		        sr.runScript(reader);
+    			}
+    			catch (SQLException e) {System.out.println(e.getMessage());}
+    		}
+        }
     	catch (SQLException e) {System.out.println(e.getMessage());}
 		
+    	
+    	// find people that matches the user input
 		String mysql = "SELECT * FROM Person WHERE name LIKE ?";
-		
 		try (Connection conn = DriverManager.getConnection(Util.Constant.Url, Util.Constant.DBUserName, Util.Constant.DBPassword);
-	      	       PreparedStatement ps = conn.prepareStatement(mysql);){
-			
+	      	       PreparedStatement ps = conn.prepareStatement(mysql);)
+		{
 			ps.setString(1, "%"+searchText+"%");
-			
 			ResultSet myresult = ps.executeQuery();
-			
-			Util.Helper.myList = new ArrayList<Person>();
-			
-			if(Util.Helper.myList == null) {
-				System.out.println("NULL");
-				System.exit(0);
-			}
+			Util.Helper.myList.clear();
 			
 			while(myresult.next()) {
 				Person temp = new Person(myresult.getInt(1), myresult.getString(2), myresult.getString(3), myresult.getDouble(4), myresult.getInt(5));
 				Util.Helper.myList.add(temp);
-				
 			}
-			
-			
-			
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
 		
-		//Util.Helper.myList = new ArrayList<Person>();
-		//Person test = new Person(1, "1", "1", 1.0, 1);
-		//Util.Helper.myList.add(test);
-		//System.out.println(Util.Helper.myList.size());
 		
 		// store search criterias, all should be string
 		HttpSession session = request.getSession(); // if we need to getSession or not
@@ -149,7 +143,6 @@ public class SearchDispatcher extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // TODO Auto-generated method stub
         doGet(request, response);
     }
 }

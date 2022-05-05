@@ -1,9 +1,0 @@
-CREATE DATABASE IF NOT EXISTS ratemyex;
-USE ratemyex;
-
-CREATE TABLE Message (
-	text VARCHAR(1000) NOT NULL,
-	senderID INT(100) NOT NULL,
-	receiverID INT(100) NOT NULL,
-	createdTime TIMESTAMP
-);

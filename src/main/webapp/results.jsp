@@ -81,7 +81,7 @@
     </div>
 	
 	<div id="search-main">
-	    <h1>Results for <%= searchText %></h1>
+	    <h1><%= Helper.myList.size() %> people with "<%= searchText %>" in their name</h1>
 	    <hr>
 	    <!--  loop through all of the search results  -->
 	    <%    

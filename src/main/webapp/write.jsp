@@ -37,10 +37,10 @@
             <a href="index.jsp" class="navbar-link">Home</a>
             <%
             	if (!username.equals("")) {
-            		%><a href="LogoutDispatcher" class="navbar-link">logout</a><%
+            		%><a href="LogoutDispatcher" class="navbar-link">Logout</a><%
             	}
             	else {
-            		%><a href="login.jsp" class="navbar-link">login/register</a><%
+            		%><a href="login.jsp" class="navbar-link">Login/Register</a><%
             	}
             %>
         </div>

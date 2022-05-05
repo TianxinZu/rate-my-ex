@@ -34,6 +34,27 @@ public class ChatDispatcher extends HttpServlet {
             throws ServletException, IOException {
     }
     
+    public String getUsername(int userID)
+    {
+    	String username ="";
+    	try
+    	{
+    		Class.forName("com.mysql.jdbc.Driver");
+			Connection connection = DriverManager.getConnection(Constant.Url, Constant.DBUserName, Constant.DBPassword);
+			String sql = "SELECT username FROM Username WHERE userid = ?";
+			PreparedStatement ps = connection.prepareStatement(sql);
+			ps.setInt(1, userID);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next())
+			{
+				username = rs.getString("username");
+			}
+			ps.close();
+    	}
+    	catch (Exception e) {e.printStackTrace();}
+    	return username;
+    }
+    
     public int getUserID(String username)
     {
     	int userID = -1;
@@ -76,6 +97,7 @@ public class ChatDispatcher extends HttpServlet {
     	String otherUserName = request.getParameter("otherUserName");
     	String otherUserIDString = request.getParameter("otherUserID");
     	Integer otherUserID = otherUserIDString == null ? getUserID(otherUserName) : Integer.valueOf(otherUserIDString);
+    	otherUserName = otherUserName == null ? getUsername(otherUserID) : otherUserName;
     	Timestamp createdTime = new Timestamp(System.currentTimeMillis());
     	if (text != null && !text.isEmpty())
     	{

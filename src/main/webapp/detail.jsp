@@ -91,10 +91,10 @@
             <a href="index.jsp" class="navbar-link">Home</a>
             <%
             	if (!username.equals("")) {
-            		%><a href="LogoutDispatcher" class="navbar-link">logout</a><%
+            		%><a href="LogoutDispatcher" class="navbar-link">Logout</a><%
             	}
             	else {
-            		%><a href="login.jsp" class="navbar-link">login/register</a><%
+            		%><a href="login.jsp" class="navbar-link">Login/Register</a><%
             	}
             %>
         </div>
@@ -149,8 +149,8 @@
 			<p>Comments:</p>
 	             <% 
              		for (int i=0; i < comments.size(); i++){%>
-             			<form action="ChatDispatcher" method="GET">
-        				<input type="submit" name="otherUserName" value=<%=userIDs.get(i)%>>
+             			<form action="ChatDispatcher" method="POST">
+        				<input type="submit" name="otherUserID" value=<%=userIDs.get(i)%>>
         				</form>
               			<p><%= comments.get(i) %></p>
               			<br>

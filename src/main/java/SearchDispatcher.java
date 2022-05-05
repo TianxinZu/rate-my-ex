@@ -7,13 +7,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.jdbc.ScriptRunner;
+
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.io.Reader;
 import java.io.Serial;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import Util.*; 
@@ -58,6 +64,43 @@ public class SearchDispatcher extends HttpServlet {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+		
+    	try {
+    		//Registering the Driver
+//	    	DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+	        //Getting the connection
+	        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306", Util.Constant.DBUserName, Util.Constant.DBPassword);
+	        //Initialize the script runner
+	        ScriptRunner sr = new ScriptRunner(con);
+	        //Creating a reader object
+	        ServletContext servletContext = getServletContext();
+	        InputStream is = servletContext.getResourceAsStream("rate-my-ex.sql");
+	        Reader reader = new InputStreamReader(is);
+	        //Running the script
+	        sr.runScript(reader);
+	        
+    	}
+    	catch (SQLException e) {System.out.println(e.getMessage());}
+		
+		try {
+        	if(Util.Helper.flag) {
+        		System.out.println("Init");
+    		//Registering the Driver
+//	    	DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+	        //Getting the connection
+	        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306", Util.Constant.DBUserName, Util.Constant.DBPassword);
+	        //Initialize the script runner
+	        ScriptRunner sr = new ScriptRunner(con);
+	        //Creating a reader object
+	        ServletContext servletContext = getServletContext();
+	        InputStream is = servletContext.getResourceAsStream("origin.sql");
+	        Reader reader = new InputStreamReader(is);
+	        //Running the script
+	        sr.runScript(reader);
+	        Util.Helper.flag = false;
+        	}
+    	}
+    	catch (SQLException e) {System.out.println(e.getMessage());}
 		
 		String mysql = "SELECT * FROM Person WHERE name LIKE ?";
 		

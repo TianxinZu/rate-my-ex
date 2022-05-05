@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bangers">
     <link href="https://fonts.googleapis.com/css2?family=Tapestry&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300&display=swap" rel="stylesheet">
     <title>RATE MY EX</title>
 </head>
 <body>
@@ -25,7 +26,7 @@
             <a href="index.jsp" id="logo">Rate my ex</a>
             <%
             	if (!username.equals("")) {
-            		out.print("<span id=\"welcome\">Hi, "+ username + "!</span>");
+            		out.print("<span id=\"welcome\" style=\" font-size=15px; font-weight: bold; font-family: 'Montserrat', sans-serif;\">Hi, "+ username + "!</span>");
             	}
             %>
         </div>

@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/WriteDispatcher")
+@WebServlet("/CreateDispatcher")
 public class CreateDispatcher extends HttpServlet{
 	public CreateDispatcher(){}
 	@Override

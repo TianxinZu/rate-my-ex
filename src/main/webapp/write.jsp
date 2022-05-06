@@ -47,17 +47,17 @@
     </div>
     <div id="add-person">
     	<h1 class="header">Add a new person</h1>
-    	<form action="AddDispatcher" method="GET">
+    	<form action="WriteDispatcher" method="GET">
     	<div class="element">
     		<label>Enter a name: </label>
     		<div class="input">
-    			<input type="text" class="user-inf">
+    			<input type="text" name="name" class="user-inf" required>
     		</div>
     	</div>
     	<div class="element">
     		<label>Gender: </label>
     		<div class="input">
-    			<label><input type="radio" name="gender" value="male" />Male</label>
+    			<label><input type="radio" name="gender" value="male" required/>Male</label>
     			<label><input type="radio" name="gender" value="female" />Female</label>
     			<label><input type="radio" name="gender" value="other" />Other</label>
     		</div>
@@ -65,7 +65,7 @@
     	<div class="element">
     		<label>Choose a rating: </label>
     		<div class="rate">
-			    <input type="radio" id="star5" name="rate" value="5" />
+			    <input type="radio" id="star5" name="rate" value="5" required/>
 			    <label for="star5" title="text">5</label>
 			    <input type="radio" id="star4" name="rate" value="4" />
 			    <label for="star4" title="text">4</label>
@@ -80,8 +80,10 @@
     	<div class="element">
     	<label>Leave some comment: </label>
     		<div class="input">
-    			<textarea name="description" row="5" column="40">Description...</textarea>
+    			<textarea name="description" row="20" column="100" required>Description...</textarea>
     		</div>
+    		<br><br>
+    		<button type="submit" name="submit" class="regbutton"><i class="fa fa-sign-in"></i>    Submit</button>
     	</div>
     	</form>
     </div>

@@ -55,13 +55,13 @@
             %>
         </div>
         <div id="navbar-middle">
-        	<a href="ContactDispatcher" class="navbar-link">Chat</a>
+        	<a href="ContactDispatcher" class="navbar-link" style="font-family: 'Montserrat', sans-serif;">Chat</a>
         </div>
         <div id="navbar-right">
             <a href="index.jsp" class="navbar-link">Home</a>
             <%
             	if (!username.equals("")) {
-            		%><a href="LogoutDispatcher" class="navbar-link">logout</a><%
+            		%><a href="LogoutDispatcher" class="navbar-link">Logout</a><%
             	}
             	else {
             		%><a href="login.jsp" class="navbar-link">Login/Register</a><%
@@ -92,14 +92,11 @@
 		      Person temp = Helper.myList.get(num);
 		      Integer id = temp.personid;
 		%>
-		      <div class="section">
+		      <div class = "section" style="font-family: 'Montserrat', sans-serif; margin-left: 3rem;">
 		         <div class="name">
 		             <h3><%=temp.name%></h3>
 		         </div>
 		         <div class="texts">
-		             <a href="detail.jsp?personId=<%= id %>">
-		             View details
-		             </a>
 		             
 		             <p>Gender: <%= temp.gender %></p >
 		             <p>Count: <%= temp.rating_count %></p >
@@ -110,6 +107,9 @@
 		             <%if(rating - (int)rating > 0){%>
 		             	<i class="fa fa-star-half-o"></i>
 		             <%} %></p >
+		             <p><a style="position:relative; top:1rem;	background-color: #FFFFCC; font-weight: bold; border-radius: 20px;padding: 5px 20px 5px 20px;" href="detail.jsp?personId=<%= id %>">
+		             View Details >>
+		             </a></p>
 		          <br>
 		      
 		         </div>
@@ -117,7 +117,6 @@
 		     <hr>
 	     <% } %>
 	</div>
-	<a href="write.jsp" style=" position:relative; top: 3rem; margin-left: 3rem; font-family: 'Tapestry', cursive;background-color: black; color: white; font-weight: bold; border-radius: 20px;padding: 5px 20px 5px 20px;  ">Didn't find the one you are looking for?</a>
-
+	<a href="write.jsp" style="margin: 3rem; font-family: 'Tapestry', cursive;background-color: black; color: white; font-weight: bold; border-radius: 20px;padding: 5px 20px 5px 20px;  ">Didn't find the one you are looking for?</a>
 </body>
 </html>

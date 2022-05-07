@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 public class Constant {
 	static public SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     static public String DBUserName = "root";
-    static public String DBPassword = "root";
+    static public String DBPassword = "Liangziyun816!";
     public static String Url = "jdbc:mysql://localhost:3306/ratemyex";
 
     static public String namePattern = "^[ A-Za-z]+$";

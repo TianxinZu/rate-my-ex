@@ -50,7 +50,7 @@ public class WriteDispatcher extends HttpServlet{
         }
 		
 		HttpSession session = request.getSession();
-		Integer personid = count;
+		Integer personid = 0;
 		String comments = request.getParameter("description");
 		String rating = request.getParameter("rate");
 		int ratings = Integer.parseInt(rating);
@@ -58,6 +58,37 @@ public class WriteDispatcher extends HttpServlet{
 		String gender = request.getParameter("gender");
 		Double myRating = (double) ratings;
 		
+		String c="SELECT COUNT(*) FROM PERSON";
+		//get the size of db for personid
+				try (Connection conn = DriverManager.getConnection(Util.Constant.Url, Util.Constant.DBUserName, Util.Constant.DBPassword);
+		       	       PreparedStatement ps = conn.prepareStatement(c);) {
+					ResultSet rs=ps.executeQuery();
+					while(rs.next()) {
+						personid= rs.getInt(1)+1;
+					}
+					
+				}
+				catch (SQLException ex) 
+			      {
+			      	System.out.println ("SQLException: " + ex.getMessage());
+			      }
+				
+				
+				Integer postid=0;
+				String c1="SELECT COUNT(*) FROM POST";
+				//get the size of db for personid
+				try (Connection conn = DriverManager.getConnection(Util.Constant.Url, Util.Constant.DBUserName, Util.Constant.DBPassword);
+		       	       PreparedStatement ps = conn.prepareStatement(c);) {
+						ResultSet rs=ps.executeQuery();
+						while(rs.next()) {
+							postid= rs.getInt(1)+1;
+						}
+						
+					}
+					catch (SQLException ex) {
+				      	System.out.println ("SQLException: " + ex.getMessage());
+					}
+						
 		String userID = "";
 		Cookie cookies[] = request.getCookies();
 	    if (cookies != null) {
@@ -73,36 +104,38 @@ public class WriteDispatcher extends HttpServlet{
 	    System.out.println(userID);
 	    
 	    Integer userid = Integer.parseInt(userID);
+	    System.out.println("USERID!!!!!!!!!!!!!!!!!!!");
+	    System.out.println(userid);
 	    
-	    String addPerson = "INSERT INTO Person (name, gender, overall_rating, rating_count) VALUES(?,?,?,?)";
+	    String addPerson = "INSERT INTO Person (personid, name, gender, overall_rating, rating_count) VALUES(?,?,?,?,?)";
 	    
 	    try (Connection conn = DriverManager.getConnection(Util.Constant.Url, Util.Constant.DBUserName, Util.Constant.DBPassword);
 	     	       PreparedStatement ps = conn.prepareStatement(addPerson);) 
 	        {
-				ps.setString(1, name);
-				ps.setString(2, gender);
-	        	ps.setInt(3, ratings);
-	        	ps.setInt(4, 1);
+				ps.setInt(1,personid);
+	    		ps.setString(2, name);
+				ps.setString(3, gender);
+	        	ps.setInt(4, ratings);
+	        	ps.setInt(5, 1);
 	        	ps.execute();
 	        }
-	        catch (SQLException ex) {System.out.println("SQLException: " + ex.getMessage());}
+	        catch (SQLException exs) {System.out.println("SQLException: " + exs.getMessage());}
 	    
-	    count++;
-	    personid = count;
 		
-		String insert ="INSERT INTO Post (personid, userid, description, rating) VALUES (?,?,?,?)";
+		String insert ="INSERT INTO Post (postid, personid,userid, description, rating) VALUES (?,?,?,?,?)";
 
 		
 		try (Connection conn = DriverManager.getConnection(Util.Constant.Url, Util.Constant.DBUserName, Util.Constant.DBPassword);
 	     	       PreparedStatement ps = conn.prepareStatement(insert);) 
 	        {
-				ps.setInt(1, count);
-				ps.setInt(2, userid);
-	        	ps.setString(3, comments);
-	        	ps.setDouble(4, myRating);
+				ps.setInt(1,postid);
+				ps.setInt(2, personid);
+				ps.setInt(3,userid);
+	        	ps.setString(4, comments);
+	        	ps.setDouble(5, myRating);
 	        	ps.execute();
 	        }
-	        catch (SQLException ex) {System.out.println("SQLException: " + ex.getMessage());}
+	        catch (SQLException exs) {System.out.println("SQLException: " + exs.getMessage());}
 		
 		//Helper myHelper = new Helper();
 		//myHelper.recalculate(personid, ratings);

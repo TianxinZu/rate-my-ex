@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="index.css" rel="stylesheet" type="text/css">
+    <link href="detail.css" rel="stylesheet" type="text/css">
     <link href="write.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bangers">
@@ -87,7 +88,7 @@
     	<div class="element" style="position:relative; top:8rem;">
     	<label style="font-family: 'Montserrat', sans-serif;">Comment: </label>
     		<span class="input"style="position:relative; top:1rem; left: 7rem" >
-    			<textarea name="description" row="20" column="100" placeholder = "Description..." required></textarea>
+    			<textarea id="comment" name="description" row="20" column="100" placeholder = "Description..." required></textarea>
     		</span>
     		<br><br>
     		<button style="font-family: 'Montserrat', sans-serif; margin-top: 30px; position:relative; background-color: #FFFFCC; font-weight: bold; border-radius: 20px;padding: 5px 20px 5px 20px;"type="submit" name="submit" class="regbutton"><i class="fa fa-sign-in"></i>    Submit</button>

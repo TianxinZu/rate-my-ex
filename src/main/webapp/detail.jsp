@@ -46,12 +46,13 @@
 	    
 	    double rating = 0.0;
 	    Integer count = 0;
-		String mysql = "SELECT description, userid FROM Post WHERE personid = ?";
+		String mysql = "SELECT description, userid, rating FROM Post WHERE personid = ?";
 		String mysql2 = "SELECT overall_rating, rating_count FROM Person WHERE personid = ?";
 		String mysql3 = "SELECT username FROM Username WHERE userid = ?";
 		List<String> comments = new ArrayList<String>();
 		List<Integer> userIDs = new ArrayList<Integer>();
 		List<String> userNames = new ArrayList<String>();
+		List<Double> ratings = new ArrayList<Double>();
 		
 		try (Connection conn = DriverManager.getConnection(Util.Constant.Url, Util.Constant.DBUserName, Util.Constant.DBPassword);
 	      	       PreparedStatement ps = conn.prepareStatement(mysql); PreparedStatement ps2 = conn.prepareStatement(mysql2); 
@@ -66,6 +67,7 @@
 			
 			while(myresult.next()) {
 				comments.add(myresult.getString(1));
+				ratings.add(myresult.getDouble(3));
 				int id = myresult.getInt(2);
 				userIDs.add(id);
 				ps3.setInt(1, id);
@@ -157,25 +159,34 @@
     		<input type="range" id="rating" name="rating"
          	min="0" max="5">
     		<br/><br/>
-    		<button type="submit" name="submit" class="regbutton"><i class="fa fa-sign-in"></i>    Submit</button>
+    		<button type="submit" name="submit" class="regbutton" style="position:relative; background-color: #FFFFCC; font-weight: bold; border-radius: 20px;padding: 5px 20px 5px 20px;"><i class="fa fa-sign-in"></i>    Submit</button>
     	</form>
 		</div>
 	</div>
 	<div id="comments">
 			<h1>Comments:</h1>
+			<hr>
 	             <% 
              		for (int i=0; i < comments.size(); i++){ %>
-             			<p><%= comments.get(i) %></p>
-             			<br>
              			<% if (!username.equals("")) { %>
+             				<p><%=userNames.get(i)%>: 
+             				<% 
+             				for (int j=0; j < ratings.get(i).intValue(); j++){%>
+              					<span class="fa fa-star checked"></span>
+             				<% } %>
+             				<% if(rating - ratings.get(i).intValue() > 0) {%>
+              					<i class="fa fa-star-half-o"></i>
+             				<% } %></p>
 	             			<form action="ChatDispatcher" method="POST">
-	        				<input type="submit" name="otherUserName" value=<%=userNames.get(i)%>>
+	        				<input type="submit" name="submit" value="Start Chatting >>" style="position:relative; background-color: #FFFFCC; font-weight: bold; border-radius: 20px;padding: 5px 20px 5px 20px;">
 	        				<input type="hidden" name="otherUserID" value=<%=userIDs.get(i)%>>
 	        				</form>
 	              			<%
 	              			}
-	              		%>
-             		<% } %>
+	              			%>
+	              			<p><%= comments.get(i) %></p>
+             				<hr>
+             		<%  } %>
 	</div>
 </body>
 </html>

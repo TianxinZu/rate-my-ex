@@ -90,7 +90,7 @@
     			<textarea name="description" row="20" column="100" placeholder = "Description..." required></textarea>
     		</span>
     		<br><br>
-    		<button style="font-family: 'Montserrat', sans-serif; margin-top: 30px;"type="submit" name="submit" class="regbutton"><i class="fa fa-sign-in"></i>    Submit</button>
+    		<button style="font-family: 'Montserrat', sans-serif; margin-top: 30px; position:relative; background-color: #FFFFCC; font-weight: bold; border-radius: 20px;padding: 5px 20px 5px 20px;"type="submit" name="submit" class="regbutton"><i class="fa fa-sign-in"></i>    Submit</button>
     	</div>
     	</form>
     </div>

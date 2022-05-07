@@ -113,10 +113,14 @@
 		          <br>
 		      
 		         </div>
+		         
 		     </div>
+		     
 		     <hr>
 	     <% } %>
+	     
 	</div>
-	<a href="write.jsp" style="margin: 3rem; font-family: 'Tapestry', cursive;background-color: black; color: white; font-weight: bold; border-radius: 20px;padding: 5px 20px 5px 20px;  ">Didn't find the one you are looking for?</a>
-</body>
+	<br>
+	<a href="write.jsp" style="margin-left: 3rem; font-family: 'Tapestry', cursive;background-color: black; color: white; font-weight: bold; border-radius: 20px;padding: 5px 20px 5px 20px;  ">Didn't find the one you are looking for?</a>
+	<br><br>
 </html>

@@ -33,7 +33,7 @@
         <%
         	if (!username.equals("")) {
         		%>	<div id="navbar-middle">
-        			<a href="ContactDispatcher" class="navbar-link">Chat</a>
+        			<a href="ContactDispatcher" class="navbar-link">Contacts</a>
         			</div>
         		<%
         	}

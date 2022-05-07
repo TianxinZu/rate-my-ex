@@ -94,9 +94,15 @@
             	}
             %>
         </div>
-        <div id="navbar-middle">
-        	<a href="ContactDispatcher" class="navbar-link">Contact List</a>
-        </div>
+        <%
+            if (!username.equals("")) {
+	        	%>
+		        <div id="navbar-middle">
+		        	<a href="ContactDispatcher" class="navbar-link" style="font-family: 'Montserrat', sans-serif;">Contacts</a>
+		        </div>
+		        <%
+        	}
+        %>
         <div id="navbar-right">
             <a href="index.jsp" class="navbar-link">Home</a>
             <%
@@ -158,13 +164,17 @@
 	<div id="comments">
 			<h1>Comments:</h1>
 	             <% 
-             		for (int i=0; i < comments.size(); i++){%>
-             			<form action="ChatDispatcher" method="POST">
-        				<input type="submit" name="otherUserName" value=<%=userNames.get(i)%>>
-        				<input type="hidden" name="otherUserID" value=<%=userIDs.get(i)%>>
-        				</form>
-              			<p><%= comments.get(i) %></p>
-              			<br>
+             		for (int i=0; i < comments.size(); i++){ %>
+             			<p><%= comments.get(i) %></p>
+             			<br>
+             			<% if (!username.equals("")) { %>
+	             			<form action="ChatDispatcher" method="POST">
+	        				<input type="submit" name="otherUserName" value=<%=userNames.get(i)%>>
+	        				<input type="hidden" name="otherUserID" value=<%=userIDs.get(i)%>>
+	        				</form>
+	              			<%
+	              			}
+	              		%>
              		<% } %>
 	</div>
 </body>

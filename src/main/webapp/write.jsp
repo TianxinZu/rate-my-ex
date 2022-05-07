@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bangers">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rajdhani">
+    <link href="https://fonts.googleapis.com/css2?family=Tapestry&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300&display=swap" rel="stylesheet">
     <title>RATE MY EX</title>
 </head>
 <body>
@@ -46,44 +48,44 @@
         </div>
     </div>
     <div id="add-person">
-    	<h1 class="header">Add a new person</h1>
+    	<h1 class="header">Add a New Person</h1>
     	<form action="WriteDispatcher" method="GET">
-    	<div class="element">
-    		<label>Enter a name: </label>
-    		<div class="input">
-    			<input type="text" name="name" class="user-inf" required>
-    		</div>
+    	<span class="element">
+    		<label style="font-family: 'Montserrat', sans-serif;">Enter a Name: </label>
+    		<span class="input">
+    			<input style="margin-left:6rem"type="text" name="name" class="user-inf" required>
+    		</span>
+    	</span>
+    	<div class="element" style="position:relative; top:2rem;">
+    		<label style="font-family: 'Montserrat', sans-serif;padding-bottom:10px">Gender: </label>
+    		<span style="margin-left:7rem;" class="input">
+    			<label style="font-family: 'Montserrat', sans-serif;"><input type="radio" name="gender" value="male" required/>Male</label>
+    			<label style="font-family: 'Montserrat', sans-serif;"><input type="radio" name="gender" value="female" />Female</label>
+    			<label style="font-family: 'Montserrat', sans-serif;"><input type="radio" name="gender" value="other" />Other</label>
+    		</span>
     	</div>
-    	<div class="element">
-    		<label>Gender: </label>
-    		<div class="input">
-    			<label><input type="radio" name="gender" value="male" required/>Male</label>
-    			<label><input type="radio" name="gender" value="female" />Female</label>
-    			<label><input type="radio" name="gender" value="other" />Other</label>
-    		</div>
-    	</div>
-    	<div class="element">
-    		<label>Choose a rating: </label>
-    		<div class="rate">
+    	<div class="element" style="position:relative; top:4rem;">
+    		<label style="font-family: 'Montserrat', sans-serif;position:relative; top:1rem;" >Choose a rating: </label>
+    		<span class="rate">
 			    <input type="radio" id="star5" name="rate" value="5" required/>
-			    <label for="star5" title="text">5</label>
+			    <label style="font-family: 'Montserrat', sans-serif;" for="star5" title="text">5</label>
 			    <input type="radio" id="star4" name="rate" value="4" />
-			    <label for="star4" title="text">4</label>
+			    <label style="font-family: 'Montserrat', sans-serif;"for="star4" title="text">4</label>
 			    <input type="radio" id="star3" name="rate" value="3" />
-			    <label for="star3" title="text">3</label>
+			    <label style="font-family: 'Montserrat', sans-serif;"for="star3" title="text">3</label>
 			    <input type="radio" id="star2" name="rate" value="2" />
-			    <label for="star2" title="text">2</label>
+			    <label style="font-family: 'Montserrat', sans-serif;"for="star2" title="text">2</label>
 			    <input type="radio" id="star1" name="rate" value="1" />
-			    <label for="star1" title="text">1</label>
-			 </div>
+			    <label style="font-family: 'Montserrat', sans-serif;"for="star1" title="text">1</label>
+			 </span>
     	</div>
-    	<div class="element">
-    	<label>Leave some comment: </label>
-    		<div class="input">
-    			<textarea name="description" row="20" column="100" required>Description...</textarea>
-    		</div>
+    	<div class="element" style="position:relative; top:8rem;">
+    	<label style="font-family: 'Montserrat', sans-serif;">Comment: </label>
+    		<span class="input"style="position:relative; top:1rem; left: 7rem" >
+    			<textarea name="description" row="20" column="100" placeholder = "Description..." required></textarea>
+    		</span>
     		<br><br>
-    		<button type="submit" name="submit" class="regbutton"><i class="fa fa-sign-in"></i>    Submit</button>
+    		<button style="font-family: 'Montserrat', sans-serif; margin-top: 30px;"type="submit" name="submit" class="regbutton"><i class="fa fa-sign-in"></i>    Submit</button>
     	</div>
     	</form>
     </div>

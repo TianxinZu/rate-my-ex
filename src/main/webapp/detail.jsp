@@ -12,6 +12,8 @@
     <link href="detail.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bangers">
+    <link href="https://fonts.googleapis.com/css2?family=Tapestry&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300&display=swap" rel="stylesheet">
     <title>Detail</title>
     
 </head>
@@ -46,21 +48,30 @@
 	    Integer count = 0;
 		String mysql = "SELECT description, userid FROM Post WHERE personid = ?";
 		String mysql2 = "SELECT overall_rating, rating_count FROM Person WHERE personid = ?";
+		String mysql3 = "SELECT username FROM Username WHERE userid = ?";
 		List<String> comments = new ArrayList<String>();
 		List<Integer> userIDs = new ArrayList<Integer>();
+		List<String> userNames = new ArrayList<String>();
 		
 		try (Connection conn = DriverManager.getConnection(Util.Constant.Url, Util.Constant.DBUserName, Util.Constant.DBPassword);
-	      	       PreparedStatement ps = conn.prepareStatement(mysql); PreparedStatement ps2 = conn.prepareStatement(mysql2);){
+	      	       PreparedStatement ps = conn.prepareStatement(mysql); PreparedStatement ps2 = conn.prepareStatement(mysql2); 
+					PreparedStatement ps3 = conn.prepareStatement(mysql3);){
 			
 			ps.setInt(1, myPerson.personid);
 			ps2.setInt(1, myPerson.personid);
 			
 			ResultSet myresult = ps.executeQuery();
 			ResultSet myresult2 = ps2.executeQuery();
+			ResultSet myresult3;
 			
 			while(myresult.next()) {
 				comments.add(myresult.getString(1));
-				userIDs.add(myresult.getInt(2));
+				int id = myresult.getInt(2);
+				userIDs.add(id);
+				ps3.setInt(1, id);
+				myresult3 = ps3.executeQuery();
+				myresult3.next();
+				userNames.add(myresult3.getString(1));
 			}
 			
 			myresult2.next();
@@ -134,22 +145,23 @@
 		<form action="AddDispatcher" method="GET">
     		<h1 class="add-header">Add a comment</h1>
     		<p>Comment</p>
-    		<textarea id="comment" name="comment" rows="4" cols="50" required></textarea>
+    		<textarea id="comment" name="comment" required></textarea>
     		<br/><br/>
-    		<p>Rating from 0 to 10</p>
+    		<p>Rating from 0 to 5</p>
     		<input type="range" id="rating" name="rating"
-         	min="0" max="10">
+         	min="0" max="5">
     		<br/><br/>
     		<button type="submit" name="submit" class="regbutton"><i class="fa fa-sign-in"></i>    Submit</button>
     	</form>
 		</div>
 	</div>
 	<div id="comments">
-			<p>Comments:</p>
+			<h1>Comments:</h1>
 	             <% 
              		for (int i=0; i < comments.size(); i++){%>
              			<form action="ChatDispatcher" method="POST">
-        				<input type="submit" name="otherUserID" value=<%=userIDs.get(i)%>>
+        				<input type="submit" name="otherUserName" value=<%=userNames.get(i)%>>
+        				<input type="hidden" name="otherUserID" value=<%=userIDs.get(i)%>>
         				</form>
               			<p><%= comments.get(i) %></p>
               			<br>

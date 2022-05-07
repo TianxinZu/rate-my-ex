@@ -49,9 +49,11 @@
     		if(contacts != null){
     			for (int i=0; i<contacts.size(); i++){
         			%>
+        			<div id="contact" style="text-align: center;">
         			<form action="ChatDispatcher" method="POST">
-        				<input type="submit" name="otherUserName" value=<%=contacts.get(i)%>><%=contacts.get(i)%>
+        				<input type="submit" name="otherUserName" style=" font-family: 'Bangers'; font-size: 40px; width: 30%; padding: 20px; margin: 30px;" value=<%=contacts.get(i)%>>
         			</form>
+        			</div>
         			<%
         		}
     		}

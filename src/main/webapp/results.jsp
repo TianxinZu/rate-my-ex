@@ -127,6 +127,15 @@
 	     
 	</div>
 	<br>
-	<a href="write.jsp" style="margin-left: 3rem; font-family: 'Tapestry', cursive;background-color: black; color: white; font-weight: bold; border-radius: 20px;padding: 5px 20px 5px 20px;  ">Didn't find the one you are looking for?</a>
+	<div style="padding-left: 20%;">
+	<%
+		if (!username.equals("")) {
+			%><a href="write.jsp" style="margin-left: 3rem; font-family: 'Tapestry', cursive;background-color: black; color: white; font-weight: bold; border-radius: 20px;padding: 5px 20px 5px 20px;">Didn't find the one you are looking for?</a><%
+		}
+		else {
+			%><a href="login.jsp" style="margin-left: 3rem; font-family: 'Tapestry', cursive;background-color: black; color: white; font-weight: bold; border-radius: 20px;padding: 5px 20px 5px 20px;">Didn't find the one you are looking for? Log in to create a new person!</a><%
+		}
+	%>
+	</div>
 	<br><br>
 </html>

@@ -1,29 +1,4 @@
-We use `demands.txt` to record the forms that backend need and the variables (cookies, ...) that the frontend need. 
+Before running `index.jsp` on tomcat server, please change the database username and password in Util.Constant. This website relies on local database.
+You can still experience functionality of networking and multi-threaded by using different account at local.
 
-index.jsp: home page
-login.jsp: login/register page
-results.jsp: page contain people associated to user input
-write.jsp: write comment page
-detail.jsp: page include all comments of a person
-chat.jsp: chat room
-
-index.jsp -> login.jsp
-index.jsp -> SearchDispatcher.java -> results.jsp
-index.jsp -> write.jsp
-login.jsp -> Login/Register/GoogleDispatcher.java -> index.jsp
-results.jsp -> index.jsp
-results.jsp -> DetailDispatcher.java -> detail.jsp
-results.jsp -> write.jsp
-write.jsp -> index.jsp
-write.jsp -> WriteDispatcher.java -> detail.jsp
-detail.jsp -> index.jsp
-detail.jsp -> chat.jsp
-chat.jsp -> index.jsp
-
-LoginDispatcher.java
-RegisterDispatcher.java
-GoogleDispatcher.java
-SearchDispatcher.java
-DetailDispatcher.java
-WriteDispatcher.java
-ChatDispatcher.java
+If the website seems malformatted, you can try to refresh the page with `Shift` + refresh, which may solve the problem that the browser does not load the css files.

@@ -1,6 +1,6 @@
 USE ratemyex;
 
-INSERT INTO Username (email, username, userpassword) VALUE ("test_for_database@test.test", "admin", "test_database");
+INSERT INTO Username (email, username, userpassword) VALUE ("test_for_database@test.test", "test_account", "test_database");
 INSERT INTO Person (name, gender, overall_rating, rating_count) VALUE ("Wa", "Female", 3, 1);
 INSERT INTO Post (personid, userid, description, rating) VALUE (1, 1, "Overall a 'ok' person. She definitely needs a lot of time commitment. Not my type but maybe yours. She will treat you well once you two get into a relationship. Really cares about you(but maybe too much for me). She Study really hard. A little bit nerdy but do put a lot of time on extracurricular activities to improve herself. Wealthy family background but her parents might not be so friendly. Choose her if you want to have a seriously relationship(maybe marriage).", 3);
 INSERT INTO Person (name, gender, overall_rating, rating_count) VALUE ("Atom", "Male", 4, 1);

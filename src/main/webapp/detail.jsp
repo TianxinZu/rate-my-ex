@@ -168,7 +168,7 @@
 			<hr>
 	             <% 
              		for (int i=0; i < comments.size(); i++){ %>
-             			<% if (!username.equals("")) { %>
+             			
              				<p><%=userNames.get(i)%>: 
              				<% 
              				for (int j=0; j < ratings.get(i).intValue(); j++){%>
@@ -177,6 +177,7 @@
              				<% if(rating - ratings.get(i).intValue() > 0) {%>
               					<i class="fa fa-star-half-o"></i>
              				<% } %></p>
+             				<% if (!username.equals("")) { %>
 	             			<form action="ChatDispatcher" method="POST">
 	        				<input type="submit" name="submit" value="Start Chatting >>" style="position:relative; background-color: #FFFFCC; font-weight: bold; border-radius: 20px;padding: 5px 20px 5px 20px;">
 	        				<input type="hidden" name="otherUserID" value=<%=userIDs.get(i)%>>
